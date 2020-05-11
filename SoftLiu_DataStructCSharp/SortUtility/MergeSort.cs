@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoftLiu_DataStructCSharp.Utility
+namespace SoftLiu_DataStructCSharp.SortUtility
 {
     /// <summary>
     /// 归并排序  以空间换时间

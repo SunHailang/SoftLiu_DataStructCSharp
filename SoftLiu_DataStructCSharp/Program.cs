@@ -1,5 +1,6 @@
 ﻿using SoftLiu_DataStructCSharp.Data;
-using SoftLiu_DataStructCSharp.Utility;
+using SoftLiu_DataStructCSharp.SequenceUtility;
+using SoftLiu_DataStructCSharp.SortUtility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,13 +14,20 @@ namespace SoftLiu_DataStructCSharp
     {
         static void Main(string[] args)
         {
+            //SortTest();
+            SequenceTest();
+            Console.Read();
+        }
+
+        private static void SortTest()
+        {
             List<Student> students = new List<Student>();
 
             for (int i = 10000; i >= 0; i--)
             {
                 students.Add(new Student() { cardID = i, name = "name" + i });
             }
-            
+
 
             Student[] stuArray = students.ToArray();
             Console.WriteLine("Student Start Sort...");
@@ -43,7 +51,23 @@ namespace SoftLiu_DataStructCSharp
                     sb.Append(stuArray[i].cardID);
             }
             //Console.WriteLine(sb.ToString());
-            Console.Read();
+        }
+
+        private static void SequenceTest()
+        {
+            List<string> s = new List<string>();
+
+            SequenceList<Student> list = new SequenceList<Student>(10);
+            list.insert(new Student() { cardID = 1, name = "sun" });
+            list.insert(0, new Student() { cardID = 2, name = "hai" });
+            list.insert(new Student() { cardID = 4, name = "lang" });
+            Console.WriteLine((list.get(4)) == null);
+
+            list.insert(6, new Student() { cardID = 6, name = "hello" });
+
+            Console.WriteLine((list.get(3)) == null);
+
+            Console.WriteLine("Length: " + list.length());
         }
     }
 }

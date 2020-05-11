@@ -20,5 +20,15 @@ namespace SoftLiu_DataStructCSharp.Data
             }
             return 0;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Student)
+            {
+                Student s = obj as Student;
+                return this.cardID - s.cardID == 0;
+            }
+            return false;
+        }
     }
 }

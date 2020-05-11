@@ -46,12 +46,14 @@
     <Compile Include="Data\Student.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\BubbleSort.cs" />
-    <Compile Include="Utility\InsertionSort.cs" />
-    <Compile Include="Utility\MergeSort.cs" />
-    <Compile Include="Utility\QuickSort.cs" />
-    <Compile Include="Utility\SelectionSort.cs" />
-    <Compile Include="Utility\ShellSort.cs" />
+    <Compile Include="SequenceUtility\LinkList.cs" />
+    <Compile Include="SequenceUtility\SequenceList.cs" />
+    <Compile Include="SortUtility\BubbleSort.cs" />
+    <Compile Include="SortUtility\InsertionSort.cs" />
+    <Compile Include="SortUtility\MergeSort.cs" />
+    <Compile Include="SortUtility\QuickSort.cs" />
+    <Compile Include="SortUtility\SelectionSort.cs" />
+    <Compile Include="SortUtility\ShellSort.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoftLiu_DataStructCSharp.Utility
+namespace SoftLiu_DataStructCSharp.SortUtility
 {
     /// <summary>
     /// 希尔排序，  优化后的插入排序
