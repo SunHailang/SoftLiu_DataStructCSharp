@@ -7,29 +7,34 @@ using System.Threading.Tasks;
 namespace SoftLiu_DataStructCSharp.Utility
 {
     /// <summary>
-    /// 冒泡排序
+    /// 插入排序
     /// </summary>
-    public class Bubble
+    public class InsertionSort
     {
         /// <summary>
-        /// 冒泡排序， 时间复杂对是： O(n^2)
-        /// 当 大数据排序的时候  冒泡排序的性能还是很低的
+        /// 插入排序    O(n^2)
+        /// 大数据的情况下， 性能还是很低
         /// </summary>
         /// <param name="array"></param>
         public static void sort(IComparable[] array)
         {
-            for (int i = array.Length - 1; i > 0; i--)
+            for (int i = 1; i < array.Length; i++)
             {
-                for (int j = 0; j < i; j++)
+                for (int j = i; j > 0; j--)
                 {
-                    //比较 索引 J ， 和 J+1 的数
-                    if(greater(array[j], array[j+1]))
+                    // 比较 j-1 的值 和 j 的值， 如果 j-1 的值比 j de 
+                    if (greater(array[j - 1], array[j]))
                     {
-                        exch(array, i, j);
+                        exch(array, j - 1, j);
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
             }
         }
+
         /// <summary>
         /// 比较 次数 ： (n^2)/2 - n/2 
         /// </summary>

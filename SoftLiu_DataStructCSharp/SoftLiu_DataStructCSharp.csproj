@@ -43,10 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Student.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\Bubble.cs" />
-    <Compile Include="Utility\Selection.cs" />
+    <Compile Include="Utility\BubbleSort.cs" />
+    <Compile Include="Utility\InsertionSort.cs" />
+    <Compile Include="Utility\MergeSort.cs" />
+    <Compile Include="Utility\QuickSort.cs" />
+    <Compile Include="Utility\SelectionSort.cs" />
+    <Compile Include="Utility\ShellSort.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

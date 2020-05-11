@@ -6,30 +6,32 @@ using System.Threading.Tasks;
 
 namespace SoftLiu_DataStructCSharp.Utility
 {
-    public class Selection
+    /// <summary>
+    /// 冒泡排序
+    /// </summary>
+    public class BubbleSort
     {
-
-        public static void sort(IComparable[] arrary)
+        /// <summary>
+        /// 冒泡排序， 时间复杂对是： O(n^2)
+        /// 当 大数据排序的时候  冒泡排序的性能还是很低的
+        /// </summary>
+        /// <param name="array"></param>
+        public static void sort(IComparable[] array)
         {
-            for (int i = 0; i <= arrary.Length - 2; i++)
+            for (int i = array.Length - 1; i > 0; i--)
             {
-                // 定义一个变量记录最小元素的所有， 默认未参与排序的第一个元素所在的位置
-                int minIndex = i;
-                for (int j = i + 1; j < arrary.Length; j++)
+                for (int j = 0; j < i; j++)
                 {
-                    // 需要比较最小所引处 miniIndex 和 j 所引处的值
-                    if(greater(arrary[minIndex], arrary[j]))
+                    //比较 索引 J ， 和 J+1 的数
+                    if(greater(array[j], array[j+1]))
                     {
-                        minIndex = j;
+                        exch(array, i, j);
                     }
                 }
-                // 交换最小元素的值 和 索引 i 处的值
-                exch(arrary, minIndex, i);
             }
         }
-
         /// <summary>
-        /// 比较 次数 ： 
+        /// 比较 次数 ： (n^2)/2 - n/2 
         /// </summary>
         /// <param name="v"></param>
         /// <param name="w"></param>
@@ -39,7 +41,7 @@ namespace SoftLiu_DataStructCSharp.Utility
             return v.CompareTo(w) > 0;
         }
         /// <summary>
-        /// 交换 次数：
+        /// 交换 次数：(n^2)/2 - n/2 
         /// </summary>
         /// <param name="a"></param>
         /// <param name="i"></param>
