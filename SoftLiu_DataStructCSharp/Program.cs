@@ -18,9 +18,10 @@ namespace SoftLiu_DataStructCSharp
             //SortTest();
             //SequenceTest();
             //LinkListTest();
-            LinkListHasCircleTest();
+            //LinkListHasCircleTest();
+            //JosephTest();
             //TwoWayLinkListTest();
-
+            StackListTest();
             Console.Read();
         }
 
@@ -119,13 +120,13 @@ namespace SoftLiu_DataStructCSharp
         /// </summary>
         private static void LinkListHasCircleTest()
         {
-            Node<string> first = new Node<string>("11");
-            Node<string> second = new Node<string>("22");
-            Node<string> thred = new Node<string>("33");
-            Node<string> four = new Node<string>("44");
-            Node<string> five = new Node<string>("55");
-            Node<string> six = new Node<string>("66");
-            Node<string> seven = new Node<string>("77");
+            Node<string> first = new Node<string>("11", null);
+            Node<string> second = new Node<string>("22", null);
+            Node<string> thred = new Node<string>("33", null);
+            Node<string> four = new Node<string>("44", null);
+            Node<string> five = new Node<string>("55", null);
+            Node<string> six = new Node<string>("66", null);
+            Node<string> seven = new Node<string>("77", null);
             // 创建链表
             first.next = second;
             second.next = thred;
@@ -177,7 +178,70 @@ namespace SoftLiu_DataStructCSharp
             else
                 Console.WriteLine("False");
         }
+        /// <summary>
+        /// 约瑟夫问题   循环链表
+        /// </summary>
+        private static void JosephTest()
+        {
+            // 解决我们的 约瑟夫问题
+            // 1. 构建循环链表， 包含41个节点，分别存储 1~41 
+            //用来记录首节点
+            Node<int> first = null;
+            //用来记录前一个节点
+            Node<int> pre = null;
+            for (int i = 1; i <= 41; i++)
+            {
+                //  如果是第一个节点
+                if (i == 1)
+                {
+                    first = new Node<int>(i, null);
+                    pre = first;
+                    continue;
+                }
+                // 如果不是第一个节点
+                Node<int> newN = new Node<int>(i, null);
+                pre.next = newN;
+                pre = newN;
+                // 如果是最有一个节点
+                if (i == 41)
+                {
+                    pre.next = first;
+                }
+            }
+            // 2. 需要count计数器， 模拟报数
+            int count = 0;
+            // 3. 遍历循环链表
+            //记录每次遍历拿到的节点，默认从首节点开始
+            Node<int> cur = first;
+            //记录当前节点的上一个节点
+            Node<int> befor = null;
 
+            while (cur != cur.next)
+            {
+                // 模拟报数
+                count++;
+                // 判断当前报数是否是3 true：删除当前节点， 打印当前节点， 重置count 让当前后移
+                if (count == 3)
+                {
+                    befor.next = cur.next;
+                    Console.Write(cur.item + ",");
+                    count = 0;
+                    cur = cur.next;
+                }
+                else
+                {
+                    //不是3 让befor变为当前节点，让当前节点后移
+                    befor = cur;
+                    cur = cur.next;
+                }
+            }
+            // 打印最后一个元素
+            //befor = cur;
+            Console.Write(cur.item + ",");
+        }
+        /// <summary>
+        /// 双向链表 测试
+        /// </summary>
         private static void TwoWayLinkListTest()
         {
             TwoWayLinkList<Student> list = new TwoWayLinkList<Student>();
@@ -217,11 +281,52 @@ namespace SoftLiu_DataStructCSharp
             sw.Stop();
             Console.WriteLine("LinkList Total Time: " + sw.ElapsedMilliseconds + "ms");
         }
-
+        /// <summary>
+        /// C# 自带的 双向链表 测试
+        /// </summary>
         private static void LinkedListTest()
         {
             // LinkedList  就是一个双向链表
             LinkedList<Student> list = new LinkedList<Student>();
+        }
+
+        private static void StackListTest()
+        {
+            StackList<Student> list = new StackList<Student>();
+            for (int i = 0; i < 5; i++)
+            {
+                list.push(new Student() { cardID = i, name = "sun" + i });
+            }
+            Console.WriteLine("StackList Length: " + list.length());
+            IEnumerator tor = list.GetEnumerator();
+            while (tor.MoveNext())
+            {
+                if (tor.Current is Student)
+                {
+                    Student s = tor.Current as Student;
+                    Console.WriteLine("cardID: " + s.cardID);
+                }
+                else
+                {
+                    Console.WriteLine("LinkList GetEnumerator is null.");
+                }
+            }
+            Student popStu = list.pop();
+            Console.WriteLine("StackList pop Stu: " + popStu.cardID);
+            Console.WriteLine("StackList Length: " + list.length());
+            IEnumerator tor1 = list.GetEnumerator();
+            while (tor1.MoveNext())
+            {
+                if (tor1.Current is Student)
+                {
+                    Student s = tor1.Current as Student;
+                    Console.WriteLine("cardID: " + s.cardID);
+                }
+                else
+                {
+                    Console.WriteLine("LinkList GetEnumerator is null.");
+                }
+            }
         }
     }
 
@@ -229,10 +334,10 @@ namespace SoftLiu_DataStructCSharp
     {
         public T item;
         public Node<T> next;
-        public Node(T t)
+        public Node(T t, Node<T> next)
         {
             this.item = t;
-            this.next = null;
+            this.next = next;
         }
     }
 }
