@@ -10,12 +10,13 @@ namespace SoftLiu_DataStructCSharp.SequenceUtility
     /// <summary>
     /// 单向链表
     /// </summary>
-    public class LinkList<T>
+    public class LinkList<T> : IEnumerable
     {
         //初始化头结点
         private Node head;
         // 记录链表的长度
         private int N;
+
         private class Node
         {
             // 存储数据
@@ -130,31 +131,60 @@ namespace SoftLiu_DataStructCSharp.SequenceUtility
             return -1;
         }
 
-        public Enumerator GetEnumerator()
+        public void reverse()
         {
-            return default(Enumerator);
+            // 判断当前链表是否时空链表， 如果是 则结束运行， 否则 调用 重载的 reverse 方法翻转
+            if (isEnpty()) return;
+
+            reverse(this.head.next);
+        }
+        /// <summary>
+        /// 单向链表的 翻转
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        private Node reverse(Node n)
+        {
+            // 翻转指定节点 n ，并把翻转后的节点返回
+            if (n.next == null)
+            {
+                this.head.next = n;
+                return n;
+            }
+            // 递归的调用翻转当前节点的下一个节点， 返回值就是链表翻转后的当前节点的上一个节点
+            Node preN = reverse(n.next);
+            // 让返回的节点的下一个节点变为当前节点
+            preN.next = n;
+            // 把当前节点的下一个节点变为 null
+            n.next = null;
+            return n;
         }
 
-        public struct Enumerator : IEnumerator<T>, IDisposable
+        /// <summary>
+        /// 快慢指针
+        /// </summary>
+        /// <returns></returns>
+        public T getMid()
         {
-            public T Current { get; }
-
-
-            //
-            // Summary:
-            //     Releases all resources used by the System.Collections.Generic.List`1.Enumerator.
-            public void Dispose()
+            // 定义两个指针
+            Node fast = this.head;
+            Node slow = this.head;
+            // 使用两个指针遍历链表 
+            while (fast != null && fast.next != null)
             {
-
-            }
-            public bool MoveNext()
-            {
-                return true;
+                // 变化 fast 和 slow 的值 
+                fast = fast.next.next;
+                slow = slow.next;
             }
 
-            public void Reset()
+            return slow.item;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            for (int i = 0; i < this.N; i++)
             {
-                throw new NotImplementedException();
+                yield return get(i);
             }
         }
     }

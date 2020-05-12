@@ -21,6 +21,11 @@ namespace SoftLiu_DataStructCSharp.Data
             return 0;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             if (obj is Student)

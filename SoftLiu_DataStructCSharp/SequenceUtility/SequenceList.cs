@@ -9,10 +9,10 @@ namespace SoftLiu_DataStructCSharp.SequenceUtility
 {
 
     /// <summary>
-    /// 扩容 / 减容
+    /// 顺序表   扩容 / 减容
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SequenceList<T>
+    public class SequenceList<T> : IEnumerable
     {
         // 存储元素数组
         private T[] eles;
@@ -131,6 +131,14 @@ namespace SoftLiu_DataStructCSharp.SequenceUtility
             for (int i = 0; i < temp.Length; i++)
             {
                 this.eles[i] = temp[i];
+            }
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            for (int i = 0; i < this.N; i++)
+            {
+                yield return get(i);
             }
         }
     }
