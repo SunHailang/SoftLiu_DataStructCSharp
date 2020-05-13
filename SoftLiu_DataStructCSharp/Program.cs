@@ -21,10 +21,18 @@ namespace SoftLiu_DataStructCSharp
             //LinkListHasCircleTest();
             //JosephTest();
             //TwoWayLinkListTest();
-            StackListTest();
+            //StackListTest();
+            //BracketsMatchTest();
+            //ReversePolishNotationTest();
+            //QueueListTest();
+            //SymbolTableTest();
+            SymbolOrderTableTest();
+            Console.WriteLine("\nAny Key Continue...");
             Console.Read();
         }
-
+        /// <summary>
+        /// 排序测试
+        /// </summary>
         private static void SortTest()
         {
             List<Student> students = new List<Student>();
@@ -58,7 +66,9 @@ namespace SoftLiu_DataStructCSharp
             }
             //Console.WriteLine(sb.ToString());
         }
-
+        /// <summary>
+        /// 顺序表 测试
+        /// </summary>
         private static void SequenceTest()
         {
             List<string> s = new List<string>();
@@ -75,7 +85,9 @@ namespace SoftLiu_DataStructCSharp
 
             Console.WriteLine("Length: " + list.length());
         }
-
+        /// <summary>
+        /// 单向链表测试
+        /// </summary>
         private static void LinkListTest()
         {
             LinkList<Student> list = new LinkList<Student>();
@@ -289,7 +301,9 @@ namespace SoftLiu_DataStructCSharp
             // LinkedList  就是一个双向链表
             LinkedList<Student> list = new LinkedList<Student>();
         }
-
+        /// <summary>
+        /// 栈 测试
+        /// </summary>
         private static void StackListTest()
         {
             StackList<Student> list = new StackList<Student>();
@@ -325,6 +339,206 @@ namespace SoftLiu_DataStructCSharp
                 else
                 {
                     Console.WriteLine("LinkList GetEnumerator is null.");
+                }
+            }
+        }
+        /// <summary>
+        /// 小括号 匹配问题  用栈的思想解决
+        /// </summary>
+        private static void BracketsMatchTest()
+        {
+            string str = "(Hello)(Hi(Sun)))";
+            bool isMatch = true;
+            // 创建一个栈对象，用来存储左括号
+            StackList<string> stack = new StackList<string>();
+            // 从左往右遍历字符串
+            for (int i = 0; i < str.Length; i++)
+            {
+                string s = str[i].ToString();
+                if (s.Equals("("))
+                {
+                    // 判断当前是否是左括号，是：把字符放到栈中
+                    stack.push(s);
+                }
+                else if (s.Equals(")"))
+                {
+                    // 继续判断是否是右括号，是：从栈中弹出左括号， 判断弹出的元素是否为null，是：退出， 否继续
+                    string p = stack.pop();
+                    if (p == null)
+                    {
+                        isMatch = false;
+                        break;
+                    }
+                }
+            }
+            if (isMatch)
+            {
+                // 遍历结束,判断栈中是否有剩余的左括号，有：不匹配 否则匹配
+                if (stack.length() > 0)
+                {
+                    isMatch = false;
+                }
+            }
+            Console.WriteLine("Brackets Match Result: " + isMatch);
+        }
+        /// <summary>
+        /// 逆波兰表达式 问题解决  用栈的思想
+        /// 仅仅支持 + - * / 四则运算
+        /// </summary>
+        private static void ReversePolishNotationTest()
+        {
+            // 中缀表达式  (3*(17-5)+18/6) = 9 转换成逆波兰表达式字符串数组
+            string[] notation = new string[] { "3", "17", "15", "-", "*", "18", "6", "/", "+" };
+
+            // 定义一个栈存储操作数
+            StackList<int> oprands = new StackList<int>();
+
+            int result = 0;
+            int o1;
+            int o2;
+            // 从左往右遍历 逆波兰表达式， 得到每一个元素
+            for (int i = 0; i < notation.Length; i++)
+            {
+                string curr = notation[i].ToString();
+                // 判断当前元素是运算符还是操作数
+                switch (curr)
+                {
+                    // 运算符，从栈中弹出两个操作数，完成运算再压入栈中
+                    case "+":
+                        o1 = oprands.pop();
+                        o2 = oprands.pop();
+                        result = o2 + o1;
+                        oprands.push(result);
+                        break;
+                    case "-":
+                        o1 = oprands.pop();
+                        o2 = oprands.pop();
+                        result = o2 - o1;
+                        oprands.push(result);
+                        break;
+                    case "*":
+                        o1 = oprands.pop();
+                        o2 = oprands.pop();
+                        result = o2 * o1;
+                        oprands.push(result);
+                        break;
+                    case "/":
+                        o1 = oprands.pop();
+                        o2 = oprands.pop();
+                        result = o2 / o1;
+                        oprands.push(result);
+                        break;
+                    default:
+                        // 操作数，直接把该操作数压到栈中
+                        oprands.push(int.Parse(curr));
+                        break;
+                }
+            }
+            // 得到栈中最后一个元素就是 逆波兰表达式的结果
+            result = oprands.pop();
+            Console.WriteLine("Reverse Polish Notation Result: " + result);
+        }
+        /// <summary>
+        /// 队列 测试
+        /// </summary>
+        private static void QueueListTest()
+        {
+            // 创建队列对象
+            QueueList<Student> list = new QueueList<Student>();
+
+            // 测试队列的enqueue方法
+            for (int i = 0; i < 5; i++)
+            {
+                list.enqueue(new Student() { cardID = i, name = "sun" + i });
+            }
+            Student stu = list.dequeue();
+            Console.WriteLine("Result: " + stu.cardID);
+            Console.WriteLine();
+            IEnumerator ie = list.GetEnumerator();
+            while (ie.MoveNext())
+            {
+                if (ie.Current is Student)
+                {
+                    Student s = ie.Current as Student;
+                    Console.WriteLine("cardID: " + s.cardID);
+                }
+                else
+                {
+                    Console.WriteLine("QueueList GetEnumerator is null.");
+                }
+            }
+        }
+        /// <summary>
+        /// 符号表 测试
+        /// </summary>
+        private static void SymbolTableTest()
+        {
+            Dictionary<string, string> strDic = new Dictionary<string, string>();
+            // 创建 符号表
+            SymbolTable<string, Student> table = new SymbolTable<string, Student>();
+            // 测试插入 put方法
+            for (int i = 0; i < 5; i++)
+            {
+                table.put(i.ToString(), new Student() { cardID = i, name = "sun" + i });
+            }
+            Console.WriteLine("Symbol Table Length: " + table.length());
+
+            table.put("2", new Student() { cardID = 22, name = "sun" + 22 });
+            Student stu = table.get("2");
+            Console.WriteLine("new put: " + stu.cardID);
+            table.delete("0");
+
+            IEnumerator ie = table.GetEnumerator();
+
+            while (ie.MoveNext())
+            {
+                if (ie.Current is KeyValuePair<string, Student>)
+                {
+                    KeyValuePair<string, Student> s = (KeyValuePair<string, Student>)ie.Current;
+                    Console.WriteLine(string.Format("key: {0}, value cardID: {1}", s.Key, s.Value.cardID));
+                }
+                else
+                {
+                    Console.WriteLine("SymbolTable GetEnumerator is null.");
+                }
+            }
+        }
+        /// <summary>
+        /// 有序符号表 测试
+        /// </summary>
+        private static void SymbolOrderTableTest()
+        {
+            // 创建 符号表
+            SymbolOrderTable<string, Student> table = new SymbolOrderTable<string, Student>();
+            // 测试插入 put方法
+            for (int i = 0; i < 8; i += 2)
+            {
+                table.put(i.ToString(), new Student() { cardID = i, name = "sun" + i });
+            }
+            Console.WriteLine("Symbol Table Length: " + table.length());
+
+            table.put("2", new Student() { cardID = 22, name = "sun" + 22 });
+            Student stu = table.get("2");
+            Console.WriteLine("new put: " + stu.cardID);
+            table.delete("0");
+
+            table.put("05", new Student() { cardID = 50, name = "sun05" });
+            table.put("7", new Student() { cardID = 7, name = "sun7" });
+            table.put("87", new Student() { cardID = 87, name = "sun87" });
+            table.put("18", new Student() { cardID = 18, name = "sun18" });
+
+            IEnumerator ie = table.GetEnumerator();
+
+            while (ie.MoveNext())
+            {
+                if (ie.Current is KeyValuePair<string, Student>)
+                {
+                    KeyValuePair<string, Student> s = (KeyValuePair<string, Student>)ie.Current;
+                    Console.WriteLine(string.Format("key: {0}, value cardID: {1}", s.Key, s.Value.cardID));
+                }
+                else
+                {
+                    Console.WriteLine("SymbolTable GetEnumerator is null.");
                 }
             }
         }
