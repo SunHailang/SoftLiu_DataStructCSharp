@@ -1,6 +1,7 @@
 ﻿using SoftLiu_DataStructCSharp.Data;
 using SoftLiu_DataStructCSharp.SequenceUtility;
 using SoftLiu_DataStructCSharp.SortUtility;
+using SoftLiu_DataStructCSharp.TreeUtility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,8 +27,9 @@ namespace SoftLiu_DataStructCSharp
             //ReversePolishNotationTest();
             //QueueListTest();
             //SymbolTableTest();
-            SymbolOrderTableTest();
-            Console.WriteLine("\nAny Key Continue...");
+            //SymbolOrderTableTest();
+            TreeUtilityTest.Test();
+            Console.Write("\nAny Key Continue...");
             Console.Read();
         }
         /// <summary>
@@ -542,6 +544,8 @@ namespace SoftLiu_DataStructCSharp
                 }
             }
         }
+
+       
     }
 
     public class Node<T>

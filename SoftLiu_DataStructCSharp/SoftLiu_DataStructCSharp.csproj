@@ -59,6 +59,8 @@
     <Compile Include="SortUtility\QuickSort.cs" />
     <Compile Include="SortUtility\SelectionSort.cs" />
     <Compile Include="SortUtility\ShellSort.cs" />
+    <Compile Include="TreeUtility\BinaryTree.cs" />
+    <Compile Include="TreeUtility\TreeUtilityTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
