@@ -18,8 +18,24 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             //BinaryTreeAfterErgodicTest();
             //BinaryTreeLayerErgodicTest();
             //BinaryTreeMaxDepthTest();
-            PagerFolderTest();
+            //PagerFolderTest
+            QuadTreeTest();
         }
+
+        private static void QuadTreeTest()
+        {
+            Rectangle rect = new Rectangle(200, 200, 200, 200);
+            QuadTree tree = new QuadTree(rect, 4);
+
+            for (int i = 0; i < 5; i++)
+            {
+                Random rd = new Random(i);
+                Point point = new Point(rd.Next(0, 400), rd.Next(0, 400));
+                Console.WriteLine(tree.insert(point));
+            }
+            Console.WriteLine();
+        }
+
         /// <summary>
         /// 二叉树的测试
         /// </summary>
