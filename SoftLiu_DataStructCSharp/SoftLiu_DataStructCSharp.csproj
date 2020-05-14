@@ -60,6 +60,11 @@
     <Compile Include="SortUtility\SelectionSort.cs" />
     <Compile Include="SortUtility\ShellSort.cs" />
     <Compile Include="TreeUtility\BinaryTree.cs" />
+    <Compile Include="TreeUtility\Heap.cs" />
+    <Compile Include="TreeUtility\HeapSort.cs" />
+    <Compile Include="TreeUtility\IndexMinPriorityQueue.cs" />
+    <Compile Include="TreeUtility\MaxPriorityQueue.cs" />
+    <Compile Include="TreeUtility\MinPriorityQueue.cs" />
     <Compile Include="TreeUtility\QuadTree.cs" />
     <Compile Include="TreeUtility\TreeUtilityTest.cs" />
   </ItemGroup>

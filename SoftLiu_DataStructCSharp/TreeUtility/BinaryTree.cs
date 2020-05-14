@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace SoftLiu_DataStructCSharp.TreeUtility
 {
+    /// <summary>
+    /// 查询二叉树
+    /// </summary>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
     public class BinaryTree<TKey, TValue>
         where TKey : IComparable
     {

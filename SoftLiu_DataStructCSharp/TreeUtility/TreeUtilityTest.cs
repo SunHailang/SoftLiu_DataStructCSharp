@@ -18,10 +18,17 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             //BinaryTreeAfterErgodicTest();
             //BinaryTreeLayerErgodicTest();
             //BinaryTreeMaxDepthTest();
-            //PagerFolderTest
-            QuadTreeTest();
+            //PagerFolderTest();
+            //QuadTreeTest();
+            //HeapTest();
+            //HeapSortTest();
+            //MaxPriorityQueueTest();
+            //MinPriorityQueueTest();
+            IndexMinPriorityQueueTest();
         }
-
+        /// <summary>
+        /// 四叉树的测试
+        /// </summary>
         private static void QuadTreeTest()
         {
             Rectangle rect = new Rectangle(200, 200, 200, 200);
@@ -193,6 +200,106 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             Console.WriteLine("Max Depth: " + maxDepth);
         }
         /// <summary>
+        /// 堆  测试
+        /// </summary>
+        private static void HeapTest()
+        {
+            // 创建堆对象
+            Heap<string> heap = new Heap<string>(10);
+            // 往堆中插入数据
+            heap.insert("Z");
+            heap.insert("A");
+            heap.insert("C");
+            heap.insert("B");
+            Console.WriteLine("Insert end");
+            // 循环删除数据
+            StringBuilder sb = new StringBuilder();
+            string result = default(string);
+            while ((result = heap.delMax()) != default(string))
+            {
+                sb.Append(result + ",");
+            }
+            Console.WriteLine(sb.ToString());
+        }
+        /// <summary>
+        /// 堆排序 测试
+        /// </summary>
+        private static void HeapSortTest()
+        {
+            // 待排序的数组
+            string[] array = new string[] { "Z", "A", "C", "B" };
+            HeapSort<string>.sort(array);
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write(array[i] + ",");
+            }
+        }
+
+        private static void MaxPriorityQueueTest()
+        {
+            MaxPriorityQueue<string> queue = new MaxPriorityQueue<string>(10);
+            // 往队列中存储元素
+            queue.insert("Z");
+            queue.insert("A");
+            queue.insert("C");
+            queue.insert("B");
+            queue.insert("D");
+            queue.insert("F");
+            queue.insert("E");
+            // 通过循环获取队列中的元素
+            Console.WriteLine("Length: " + queue.length());
+            while (!queue.isEmpty())
+            {
+                string max = queue.delMax();
+                Console.Write(max + ",");
+            }
+        }
+        /// <summary>
+        /// 最小优先队列 测试
+        /// </summary>
+        private static void MinPriorityQueueTest()
+        {
+            MinPriorityQueue<string> queue = new MinPriorityQueue<string>(10);
+            queue.insert("Z");
+            queue.insert("A");
+            queue.insert("C");
+            queue.insert("B");
+            queue.insert("D");
+            queue.insert("F");
+            queue.insert("E");
+            // 通过循环获取队列中的元素
+            Console.WriteLine("Length: " + queue.length());
+            while (!queue.isEmpty())
+            {
+                string min = queue.delMin();
+                Console.Write(min + ",");
+            }
+        }
+        /// <summary>
+        /// 索引优先最小队列 测试
+        /// </summary>
+        private static void IndexMinPriorityQueueTest()
+        {
+            // 创建索引优先最小队列
+            IndexMinPriorityQueue<string> queue = new IndexMinPriorityQueue<string>(10);
+            queue.insert(0, "Z");
+            queue.insert(1, "A");
+            queue.insert(2, "C");
+            queue.insert(3, "B");
+            Console.WriteLine("Length: " + queue.length());
+            //queue.changeItem(2, "M");
+            Console.WriteLine("Length: " + queue.length());
+
+            queue.delete(0);
+            Console.WriteLine("Length: " + queue.length());
+            while (!queue.isEmpty())
+            {
+                int index = queue.delMinIndex();
+                Console.Write(index + ",");
+            }
+        }
+
+        /// <summary>
         /// 折纸问题
         /// </summary>
         private static void PagerFolderTest()
@@ -206,13 +313,43 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
                 if (i == 0)
                 {
                     root = new Node<string>("down", null, null);
+                    continue;
                 }
-                else
+                // 当前不是第一次对折
+                // 定义一个辅助队列， 通过层序遍历的思想，找到叶子节点，叶子节点添加子节点
+                QueueList<Node<string>> queue = new QueueList<Node<string>>();
+                queue.enqueue(root);
+                while (!queue.isEmpty())
                 {
-                    // 当前不是第一次对折
+                    // 从队列中弹出一个节点
+                    Node<string> temp = queue.dequeue();
+                    // 如果有左子节点 或 右子节点，把子节点放到队列中
+                    if (temp.left != null) queue.enqueue(temp.left);
+                    if (temp.right != null) queue.enqueue(temp.right);
+                    // 如果没有子节点， 则需要该节点添加左子节点和右子节点
+                    if (temp.left == null && temp.right == null)
+                    {
+                        temp.left = new Node<string>("down", null, null);
+                        temp.right = new Node<string>("up", null, null);
+                    }
                 }
-            }
-            // 遍历树 打印每个节点
+            } // create root tree
+
+            // 遍历树 (中序遍历) 打印每个节点
+            printTree(root);
+        }
+        private static void printTree(Node<string> root)
+        {
+            if (root == null) return;
+            // 打印左子树的每个节点
+            if (root.left != null)
+                printTree(root.left);
+            // 打印当前节点
+            Console.Write(root.item + " ");
+
+            // 打印右子树每个节点
+            if (root.right != null)
+                printTree(root.right);
         }
 
 
