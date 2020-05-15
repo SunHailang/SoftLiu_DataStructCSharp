@@ -70,7 +70,7 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
         }
         private void swim(int k)
         {
-            while (k > 1)
+            while (k > 1 && k <= this.N)
             {
                 if (less(k, k / 2))
                 {
@@ -96,14 +96,14 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             // 获取最小元素，关联的索引
             int minIndex = this.pq[1];
             // 删除items中的元素
-            this.items[this.pq[minIndex]] = default(T);
+            this.items[minIndex] = default(T);
             // 交换pq中1和最大索引的元素
             exch(1, this.N);
             // 删除qp中对应的内容
             this.qp[this.pq[this.N]] = -1;
             // 删除掉 pq最大索引数
             this.pq[this.N] = -1;
-            
+
             // 元素个数 -1
             this.N--;
             // 下沉矫正
@@ -116,16 +116,17 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
         /// <param name="i"></param>
         public void delete(int i)
         {
-            //i++;
-            int k = this.pq[i];
+            if (this.items[i] == null) return;
+            // 删除 items的值
+            this.items[i] = default(T);
+            // i 在 pq中的索引
+            int k = this.qp[i];
             // 交换pq中索引k的值和最大索引的值
             exch(k, this.N);
             // 删除qp的值
             this.qp[this.pq[this.N]] = -1;
             // 删除pq的值
             this.pq[this.N] = -1;
-            // 删除 items的值
-            this.items[k] = default(T);
             // 元素个数 -1
             this.N--;
             // 堆调整
@@ -136,7 +137,7 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
         {
             while (2 * k <= this.N)
             {
-                int min = 2 * k;
+                int min;
                 // 找到子节点中的较小值，在进行比较
                 if (2 * k + 1 <= this.N)
                 {

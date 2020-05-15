@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SoftLiu_DataStructCSharp.TreeUtility
 {
     /// <summary>
-    /// 查询二叉树
+    /// 二叉查找树   二分法[时间复杂度:O(LogN)] 转化成数据结构 就是一个二叉查找树
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
@@ -62,12 +62,12 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             int cmp = key.CompareTo(x.key);
             if (cmp > 0)
             {
-                // 如果key小于x节点的键，则继续找x节点的左子树
+                // 如果key大于x节点的键，则继续找x节点的右子树
                 x.right = put(x.right, key, value);
             }
             else if (cmp < 0)
             {
-                // 如果key大于x节点的键，则继续找x节点的右子树
+                // 如果key小于x节点的键，则继续找x节点的左子树
                 x.left = put(x.left, key, value);
             }
             else

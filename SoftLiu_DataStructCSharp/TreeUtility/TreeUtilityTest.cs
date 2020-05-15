@@ -25,6 +25,7 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             //MaxPriorityQueueTest();
             //MinPriorityQueueTest();
             IndexMinPriorityQueueTest();
+            //RedBlackTreeTest();
         }
         /// <summary>
         /// 四叉树的测试
@@ -282,23 +283,44 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
         {
             // 创建索引优先最小队列
             IndexMinPriorityQueue<string> queue = new IndexMinPriorityQueue<string>(10);
-            queue.insert(0, "Z");
-            queue.insert(1, "A");
-            queue.insert(2, "C");
-            queue.insert(3, "B");
-            Console.WriteLine("Length: " + queue.length());
-            //queue.changeItem(2, "M");
+            for (int i = 0; i < 5; i++)
+            {
+                queue.insert(i, "A"+i);
+            }
             Console.WriteLine("Length: " + queue.length());
 
-            queue.delete(0);
-            Console.WriteLine("Length: " + queue.length());
+            //queue.delete(0);
+            //Console.WriteLine("Length: " + queue.length());
+            //queue.delete(1);
+            //Console.WriteLine("Length: " + queue.length());
+            //queue.delete(2);
+            //Console.WriteLine("Length: " + queue.length());
+
+
             while (!queue.isEmpty())
             {
                 int index = queue.delMinIndex();
+                
                 Console.Write(index + ",");
             }
         }
+        /// <summary>
+        /// 红黑树 测试
+        /// </summary>
+        private static void RedBlackTreeTest()
+        {
+            RedBlackTree<int, string> tree = new RedBlackTree<int, string>();
+            for (int i = 0; i < 5; i++)
+            {
+                tree.insert(i, "sun" + i);
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                string value1 = tree.get(i);
+                Console.WriteLine(value1);
+            }
 
+        }
         /// <summary>
         /// 折纸问题
         /// </summary>
