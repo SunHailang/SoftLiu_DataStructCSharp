@@ -24,8 +24,10 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             //HeapSortTest();
             //MaxPriorityQueueTest();
             //MinPriorityQueueTest();
-            IndexMinPriorityQueueTest();
+            //IndexMinPriorityQueueTest();
             //RedBlackTreeTest();
+            //UnionFindTest();
+            UnionFindTreeTest();
         }
         /// <summary>
         /// 四叉树的测试
@@ -35,10 +37,10 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             Rectangle rect = new Rectangle(200, 200, 200, 200);
             QuadTree tree = new QuadTree(rect, 4);
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Random rd = new Random(i);
-                Point point = new Point(rd.Next(0, 400), rd.Next(0, 400));
+                Point point = new Point(rd.Next(0, 400), rd.Next(0, 400), i.ToString());
                 Console.WriteLine(tree.insert(point));
             }
             Console.WriteLine();
@@ -285,7 +287,7 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             IndexMinPriorityQueue<string> queue = new IndexMinPriorityQueue<string>(10);
             for (int i = 0; i < 5; i++)
             {
-                queue.insert(i, "A"+i);
+                queue.insert(i, "A" + i);
             }
             Console.WriteLine("Length: " + queue.length());
 
@@ -300,7 +302,7 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             while (!queue.isEmpty())
             {
                 int index = queue.delMinIndex();
-                
+
                 Console.Write(index + ",");
             }
         }
@@ -320,6 +322,64 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
                 Console.WriteLine(value1);
             }
 
+        }
+        /// <summary>
+        /// 并查集测试
+        /// </summary>
+        private static void UnionFindTest()
+        {
+            // 创建并查集
+            UnionFind union = new UnionFind(5);
+
+            Console.WriteLine("define: " + union.count());
+
+            // 从控制台录入两个要合并的元素，调用union方法合并，观察合并后并查集中的分组是否减少
+            while (true)
+            {
+                string strP = Console.ReadLine();
+                string strQ = Console.ReadLine();
+                int p = 0;
+                int q = 0;
+                int.TryParse(strP, out p);
+                int.TryParse(strQ, out q);
+                // 判断这两个元素是否已经在同一组了
+                if (union.connected(p, q))
+                {
+                    Console.WriteLine(string.Format("{0} had {1}", p, q));
+                    continue;
+                }
+                union.union(p, q);
+                Console.WriteLine("union count: " + union.count());
+            }
+        }
+        /// <summary>
+        /// 并查集树测试
+        /// </summary>
+        private static void UnionFindTreeTest()
+        {
+            // 创建并查集
+            UnionFindTree unionTree = new UnionFindTree(5);
+
+            Console.WriteLine("define: " + unionTree.count());
+
+            // 从控制台录入两个要合并的元素，调用union方法合并，观察合并后并查集中的分组是否减少
+            while (true)
+            {
+                string strP = Console.ReadLine();
+                string strQ = Console.ReadLine();
+                int p = 0;
+                int q = 0;
+                int.TryParse(strP, out p);
+                int.TryParse(strQ, out q);
+                // 判断这两个元素是否已经在同一组了
+                if (unionTree.connected(p, q))
+                {
+                    Console.WriteLine(string.Format("{0} had {1}", p, q));
+                    continue;
+                }
+                unionTree.union(p, q);
+                Console.WriteLine("union count: " + unionTree.count());
+            }
         }
         /// <summary>
         /// 折纸问题

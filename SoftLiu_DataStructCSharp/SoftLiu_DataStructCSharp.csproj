@@ -69,6 +69,8 @@
     <Compile Include="TreeUtility\QuadTree.cs" />
     <Compile Include="TreeUtility\RedBlackTree.cs" />
     <Compile Include="TreeUtility\TreeUtilityTest.cs" />
+    <Compile Include="TreeUtility\UnionFind.cs" />
+    <Compile Include="TreeUtility\UnionFindTree.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

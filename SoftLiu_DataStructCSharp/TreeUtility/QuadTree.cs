@@ -1,5 +1,6 @@
 ﻿using SoftLiu_DataStructCSharp.SequenceUtility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,20 +70,57 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             }
         }
 
+        public QueueList<Point> query(Rectangle range, QueueList<Point> found = null)
+        {
+            if (found == null) found = new QueueList<Point>();
+
+            if (!this.boundary.intersects(range))
+            {
+                return found;
+            }
+            else
+            {
+                IEnumerator ie = this.points.GetEnumerator();
+                while (ie.MoveNext())
+                {
+                    Point p = ie.Current as Point;
+                    if (p != null && range.constains(p))
+                    {
+                        found.enqueue(p);
+                    }
+                }
+                if (this.divided)
+                {
+                    this.northwest.query(range, found);
+                    this.northeast.query(range, found);
+                    this.southwest.query(range, found);
+                    this.southeast.query(range, found);
+                }
+            }
+            return found;
+        }
 
     }
-
+    /// <summary>
+    /// 坐标点位置在中心点
+    /// </summary>
     public class Point
     {
         public int x;
         public int y;
-        public Point(int x, int y)
+
+        private string m_name;
+        public string name { get { return m_name; } }
+        public Point(int x, int y, string name)
         {
             this.x = x;
             this.y = y;
+            this.m_name = name;
         }
     }
-
+    /// <summary>
+    /// 坐标点位置在中心点
+    /// </summary>
     public class Rectangle
     {
         public int x;
@@ -99,10 +137,18 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
 
         public bool constains(Point point)
         {
-            return (point.x >= this.x - this.w &&
-                point.x <= this.x + this.w &&
-                point.y >= this.y - this.h &&
-                point.y <= this.y + this.h);
+            return (point.x >= this.x - this.w / 2 &&
+                point.x <= this.x + this.w / 2 &&
+                point.y >= this.y - this.h / 2 &&
+                point.y <= this.y + this.h / 2);
+        }
+
+        public bool intersects(Rectangle range)
+        {
+            return !(range.x - range.w / 2 > this.x + this.w / 2 ||
+                range.x + range.w / 2 < this.x + this.w / 2 ||
+                range.y - range.h / 2 > this.y + this.h / 2 ||
+                range.y + range.h / 2 < this.y - this.h / 2);
         }
     }
 
