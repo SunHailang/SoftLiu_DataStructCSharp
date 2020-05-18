@@ -27,7 +27,9 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             //IndexMinPriorityQueueTest();
             //RedBlackTreeTest();
             //UnionFindTest();
-            UnionFindTreeTest();
+            //UnionFindTreeTest();
+            //UnionFindTreeWeightedTest();
+            UnionFindTreeWeightedRoad();
         }
         /// <summary>
         /// 四叉树的测试
@@ -380,6 +382,62 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
                 unionTree.union(p, q);
                 Console.WriteLine("union count: " + unionTree.count());
             }
+        }
+        /// <summary>
+        /// 并查集权重  压缩路径
+        /// </summary>
+        private static void UnionFindTreeWeightedTest()
+        {
+            // 创建并查集
+            UnionFindTreeWeighted unionTree = new UnionFindTreeWeighted(5);
+
+            Console.WriteLine("define: " + unionTree.count());
+
+            // 从控制台录入两个要合并的元素，调用union方法合并，观察合并后并查集中的分组是否减少
+            while (true)
+            {
+                string strP = Console.ReadLine();
+                string strQ = Console.ReadLine();
+                int p = 0;
+                int q = 0;
+                int.TryParse(strP, out p);
+                int.TryParse(strQ, out q);
+                // 判断这两个元素是否已经在同一组了
+                if (unionTree.connected(p, q))
+                {
+                    Console.WriteLine(string.Format("{0} had {1}", p, q));
+                    continue;
+                }
+                unionTree.union(p, q);
+                Console.WriteLine("union count: " + unionTree.count());
+            }
+        }
+        /// <summary>
+        /// 城市交通  畅通工程
+        /// </summary>
+        private static void UnionFindTreeWeightedRoad()
+        {
+            // 20 个城市
+            UnionFindTreeWeighted union = new UnionFindTreeWeighted(20);
+            // 已经修好的路 7条  0-1  6-9  3-8  5-11  2-12  6-10  4-8
+            Dictionary<int, int> hadRoad = new Dictionary<int, int>();
+            hadRoad.Add(0, 1);
+            hadRoad.Add(6, 9);
+            hadRoad.Add(3, 8);
+            hadRoad.Add(5, 11);
+            hadRoad.Add(2, 12);
+            //hadRoad.Add(6, 10);
+            hadRoad.Add(4, 8);
+            foreach (KeyValuePair<int, int> item in hadRoad)
+            {
+                // 调用并查集对象的 union方法让两个城市相交
+                union.union(item.Key, item.Value);
+            }
+            union.union(6, 10);
+            // 获取当前并查集中分组的数量，就可以得到还需要修建的道路的数目
+            int roots = union.count() - 1;
+
+            Console.WriteLine(string.Format("need {0} roads", roots));
         }
         /// <summary>
         /// 折纸问题

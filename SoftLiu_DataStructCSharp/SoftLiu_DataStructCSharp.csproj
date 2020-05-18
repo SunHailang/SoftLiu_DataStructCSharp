@@ -44,6 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Student.cs" />
+    <Compile Include="GraphUtility\BreadthFirstSearch.cs" />
+    <Compile Include="GraphUtility\DepthFirstPaths.cs" />
+    <Compile Include="GraphUtility\DepthFirstSearch.cs" />
+    <Compile Include="GraphUtility\GraphDigraph.cs" />
+    <Compile Include="GraphUtility\GraphDirectedCyle.cs" />
+    <Compile Include="GraphUtility\GraphUndirected.cs" />
+    <Compile Include="GraphUtility\GraphUtilityTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SequenceUtility\LinkList.cs" />
@@ -71,6 +78,7 @@
     <Compile Include="TreeUtility\TreeUtilityTest.cs" />
     <Compile Include="TreeUtility\UnionFind.cs" />
     <Compile Include="TreeUtility\UnionFindTree.cs" />
+    <Compile Include="TreeUtility\UnionFindTreeWeighted.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

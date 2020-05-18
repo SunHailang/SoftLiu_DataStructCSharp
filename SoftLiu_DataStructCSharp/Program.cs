@@ -1,4 +1,5 @@
 ﻿using SoftLiu_DataStructCSharp.Data;
+using SoftLiu_DataStructCSharp.GraphUtility;
 using SoftLiu_DataStructCSharp.SequenceUtility;
 using SoftLiu_DataStructCSharp.SortUtility;
 using SoftLiu_DataStructCSharp.TreeUtility;
@@ -28,7 +29,8 @@ namespace SoftLiu_DataStructCSharp
             //QueueListTest();
             //SymbolTableTest();
             //SymbolOrderTableTest();
-            TreeUtilityTest.Test();
+            //TreeUtilityTest.Test();
+            GraphUtilityTest.Test();
             Console.Write("\nAny Key Continue...");
             Console.Read();
         }
