@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SoftLiu_DataStructCSharp.TreeUtility
 {
+    /// <summary>
+    /// 并查集 权重树
+    /// </summary>
     public class UnionFindTreeWeighted
     {
         /// <summary>

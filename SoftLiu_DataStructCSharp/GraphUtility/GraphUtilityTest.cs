@@ -15,7 +15,10 @@ namespace SoftLiu_DataStructCSharp.GraphUtility
             //DepthFirstSearchTest();
             //BreadthFirstSearchTest();
             //GraphRoad();
-            DepthFirstPaths();
+            //DepthFirstPaths();
+            //TopoLogicalOrderTest();
+            //PrimMSTTest();
+            KruskalMSTTest();
         }
         /// <summary>
         /// 深度优先搜索 测试
@@ -163,6 +166,118 @@ namespace SoftLiu_DataStructCSharp.GraphUtility
             {
                 int point = (int)ie.Current;
                 Console.Write(point + ",");
+            }
+        }
+        /// <summary>
+        /// 拓扑排序 测试
+        /// </summary>
+        private static void TopoLogicalOrderTest()
+        {
+            // 准备有向图
+            GraphDigraph graph = new GraphDigraph(6);
+            graph.addEdge(0, 2);
+            graph.addEdge(0, 3);
+            graph.addEdge(1, 3);
+            graph.addEdge(2, 4);
+            graph.addEdge(3, 4);
+            graph.addEdge(4, 5);
+            // 通过TopoLogicalOrder对象排序
+            TopoLogicalOrder order = new TopoLogicalOrder(graph);
+            if (!order.isCycle())
+            {
+                StackList<int> stack = order.order();
+                // 获取顶点线性排序的打印
+                if (stack != null)
+                {
+                    IEnumerator ie = stack.GetEnumerator();
+                    while (ie.MoveNext())
+                    {
+                        int o = (int)ie.Current;
+                        Console.Write(o + ",");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("TopoLogicalOrder stack is null.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("has cycle.");
+            }
+
+
+        }
+        /// <summary>
+        ///  PrimMST 算法测试
+        /// </summary>
+        private static void PrimMSTTest()
+        {
+            // 准备一个加权无向图
+            EdgeWeightedGraph graph = new EdgeWeightedGraph(8);
+            graph.addEdge(new Edge(4, 5, 0.35f));
+            graph.addEdge(new Edge(4, 7, 0.37f));
+            graph.addEdge(new Edge(5, 7, 0.28f));
+            graph.addEdge(new Edge(0, 7, 0.16f));
+            graph.addEdge(new Edge(1, 5, 0.32f));
+            graph.addEdge(new Edge(0, 4, 0.38f));
+            graph.addEdge(new Edge(2, 3, 0.17f));
+            graph.addEdge(new Edge(1, 7, 0.19f));
+            graph.addEdge(new Edge(0, 2, 0.26f));
+            graph.addEdge(new Edge(1, 2, 0.36f));
+            graph.addEdge(new Edge(1, 3, 0.29f));
+            graph.addEdge(new Edge(2, 7, 0.34f));
+            graph.addEdge(new Edge(6, 2, 0.40f));
+            graph.addEdge(new Edge(3, 6, 0.52f));
+            graph.addEdge(new Edge(6, 0, 0.58f));
+            graph.addEdge(new Edge(6, 4, 0.93f));
+            // 创建一个 primMST对象， 计算加权无向图中的最小树
+            PrimMST prim = new PrimMST(graph);
+            // 获取最小生成树中的所有边
+            QueueList<Edge> queue = prim.edges();
+            // 遍历打印所有边
+            IEnumerator ie = queue.GetEnumerator();
+            while (ie.MoveNext())
+            {
+                Edge e = (Edge)ie.Current;
+                int v = e.either();
+                int w = e.other(v);
+                Console.WriteLine(v + "->" + w + " : " + e.weight().ToString("F2") + ",");
+            }
+        }
+        /// <summary>
+        /// KruskalMST 算法的测试
+        /// </summary>
+        private static void KruskalMSTTest()
+        {
+            // 准备一个加权无向图
+            EdgeWeightedGraph graph = new EdgeWeightedGraph(8);
+            graph.addEdge(new Edge(4, 5, 0.35f));
+            graph.addEdge(new Edge(4, 7, 0.37f));
+            graph.addEdge(new Edge(5, 7, 0.28f));
+            graph.addEdge(new Edge(0, 7, 0.16f));
+            graph.addEdge(new Edge(1, 5, 0.32f));
+            graph.addEdge(new Edge(0, 4, 0.38f));
+            graph.addEdge(new Edge(2, 3, 0.17f));
+            graph.addEdge(new Edge(1, 7, 0.19f));
+            graph.addEdge(new Edge(0, 2, 0.26f));
+            graph.addEdge(new Edge(1, 2, 0.36f));
+            graph.addEdge(new Edge(1, 3, 0.29f));
+            graph.addEdge(new Edge(2, 7, 0.34f));
+            graph.addEdge(new Edge(6, 2, 0.40f));
+            graph.addEdge(new Edge(3, 6, 0.52f));
+            graph.addEdge(new Edge(6, 0, 0.58f));
+            graph.addEdge(new Edge(6, 4, 0.93f));
+            // 创建KruskalMST对象
+            KruskalMST kruskal = new KruskalMST(graph);
+            QueueList<Edge> allEdges = kruskal.edges();
+            IEnumerator ie = allEdges.GetEnumerator();
+            while (ie.MoveNext())
+            {
+                Edge e = (Edge)ie.Current;
+                int v = e.either();
+                int w = e.other(v);
+                Console.WriteLine(v + "->" + w + " : " + e.weight().ToString("F2") + ",");
             }
         }
     }
