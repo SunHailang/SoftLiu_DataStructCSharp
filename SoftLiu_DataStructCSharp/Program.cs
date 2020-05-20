@@ -1,5 +1,6 @@
 ﻿using SoftLiu_DataStructCSharp.Data;
 using SoftLiu_DataStructCSharp.GraphUtility;
+using SoftLiu_DataStructCSharp.QuestionApplication.AStar;
 using SoftLiu_DataStructCSharp.SequenceUtility;
 using SoftLiu_DataStructCSharp.SortUtility;
 using SoftLiu_DataStructCSharp.TreeUtility;
@@ -30,7 +31,12 @@ namespace SoftLiu_DataStructCSharp
             //SymbolTableTest();
             //SymbolOrderTableTest();
             //TreeUtilityTest.Test();
-            GraphUtilityTest.Test();
+            //GraphUtilityTest.Test();
+            #region A Star
+            AStarPaogram aStar = new AStarPaogram();
+            aStar.Awake();
+            #endregion
+
             Console.Write("\nAny Key Continue...");
             Console.Read();
         }
