@@ -49,7 +49,7 @@ namespace SoftLiu_DataStructCSharp.GraphUtility
         /// <returns></returns>
         public int from()
         {
-            return -1;
+            return this.V;
         }
         /// <summary>
         /// 获取有向边的终点
@@ -57,7 +57,7 @@ namespace SoftLiu_DataStructCSharp.GraphUtility
         /// <returns></returns>
         public int to()
         {
-            return -1;
+            return this.W;
         }
     }
 }

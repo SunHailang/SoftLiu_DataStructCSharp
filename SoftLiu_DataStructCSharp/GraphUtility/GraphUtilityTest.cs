@@ -18,7 +18,8 @@ namespace SoftLiu_DataStructCSharp.GraphUtility
             //DepthFirstPaths();
             //TopoLogicalOrderTest();
             //PrimMSTTest();
-            KruskalMSTTest();
+            //KruskalMSTTest();
+            DijksraSPTest();
         }
         /// <summary>
         /// 深度优先搜索 测试
@@ -278,6 +279,49 @@ namespace SoftLiu_DataStructCSharp.GraphUtility
                 int v = e.either();
                 int w = e.other(v);
                 Console.WriteLine(v + "->" + w + " : " + e.weight().ToString("F2") + ",");
+            }
+        }
+        /// <summary>
+        /// 最短路径
+        /// </summary>
+        private static void DijksraSPTest()
+        {
+            // 创建加权有向图
+            EdgeDirectedWeightedDirgraph graph = new EdgeDirectedWeightedDirgraph(8);
+            graph.addEdge(new EdgeDirected(4, 5, 0.35f));
+            graph.addEdge(new EdgeDirected(5, 4, 0.35f));
+            graph.addEdge(new EdgeDirected(4, 7, 0.37f));
+            graph.addEdge(new EdgeDirected(5, 7, 0.28f));
+            graph.addEdge(new EdgeDirected(7, 5, 0.28f));
+            graph.addEdge(new EdgeDirected(5, 1, 0.32f));
+            graph.addEdge(new EdgeDirected(0, 4, 0.38f));
+            graph.addEdge(new EdgeDirected(0, 2, 0.26f));
+            graph.addEdge(new EdgeDirected(7, 3, 0.39f));
+            graph.addEdge(new EdgeDirected(1, 3, 0.29f));
+            graph.addEdge(new EdgeDirected(2, 7, 0.34f));
+            graph.addEdge(new EdgeDirected(6, 2, 0.40f));
+            graph.addEdge(new EdgeDirected(3, 6, 0.52f));
+            graph.addEdge(new EdgeDirected(6, 0, 0.58f));
+            graph.addEdge(new EdgeDirected(6, 4, 0.93f));
+            // 创建 DijksraSP 对象 查找最短路径
+            int start = 0;
+            DijksraSP dijksra = new DijksraSP(graph, start);
+            // 查找最短路径  0->6
+            int end = 6;
+            QueueList<EdgeDirected> allEdges = dijksra.pathTo(end);
+            // 遍历打印
+            if (allEdges == null)
+            {
+                Console.WriteLine("not path to " + end);
+            }
+            else
+            {
+                IEnumerator ie = allEdges.GetEnumerator();
+                while (ie.MoveNext())
+                {
+                    EdgeDirected e = (EdgeDirected)ie.Current;
+                    Console.WriteLine(e.from() + " -> " + e.to() + " : " + e.weight().ToString("F2"));
+                }
             }
         }
     }

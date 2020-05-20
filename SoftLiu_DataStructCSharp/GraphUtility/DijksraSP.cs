@@ -1,6 +1,7 @@
 ﻿using SoftLiu_DataStructCSharp.SequenceUtility;
 using SoftLiu_DataStructCSharp.TreeUtility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace SoftLiu_DataStructCSharp.GraphUtility
 {
     /// <summary>
-    /// 最短路径树
+    /// 最短路径树 Dijksra算法
     /// </summary>
     public class DijksraSP
     {
@@ -32,7 +33,25 @@ namespace SoftLiu_DataStructCSharp.GraphUtility
         /// <param name="s"></param>
         public DijksraSP(EdgeDirectedWeightedDirgraph g, int s)
         {
-
+            // 初始化 edgeTo
+            this.edgeTo = new EdgeDirected[g.countV()];
+            // 初始化 distToDouble
+            this.distToDouble = new double[g.countV()];
+            for (int i = 0; i < this.distToDouble.Length; i++)
+            {
+                this.distToDouble[i] = Double.PositiveInfinity;
+            }
+            // 初始化 pq
+            this.pq = new IndexMinPriorityQueue<double>(g.countV());
+            // 找到图g中顶点s为起点的最短路径树
+            // 默认让顶点s进入到最短路径树中
+            this.distToDouble[s] = 0.0f;
+            this.pq.insert(s, 0.0f);
+            // 遍历pq
+            while (!this.pq.isEmpty())
+            {
+                relax(g, this.pq.delMinIndex());
+            }
         }
 
         /// <summary>
@@ -42,7 +61,28 @@ namespace SoftLiu_DataStructCSharp.GraphUtility
         /// <param name="v"></param>
         private void relax(EdgeDirectedWeightedDirgraph g, int v)
         {
-
+            IEnumerator ie = g.adj(v).GetEnumerator();
+            while (ie.MoveNext())
+            {
+                EdgeDirected e = (EdgeDirected)ie.Current;
+                // 获取到该边的终点w
+                int w = e.to();
+                // 通过松弛技术，判断从起点s到顶点w的最短路径是否需要先从顶点s到顶点v，然后再由定点v到顶点w
+                if (this.distTo(v) + e.weight() < this.distTo(w))
+                {
+                    this.distToDouble[w] = this.distToDouble[v] + e.weight();
+                    this.edgeTo[w] = e;
+                    // 判断pq中是否已经存在在顶点w，如果存在，则更新新权重，如果不存在则直接添加
+                    if (this.pq.contains(w))
+                    {
+                        this.pq.changeItem(w, this.distTo(w));
+                    }
+                    else
+                    {
+                        this.pq.insert(w, distTo(w));
+                    }
+                }
+            }
         }
         /// <summary>
         /// 获取从顶点s到顶点v的最短路径总权重
@@ -60,7 +100,7 @@ namespace SoftLiu_DataStructCSharp.GraphUtility
         /// <returns></returns>
         public bool hasPathTo(int v)
         {
-            return false;
+            return this.distToDouble[v] < Double.PositiveInfinity;
         }
         /// <summary>
         /// 查询从起点s到顶点v的最短路径中所有的边
@@ -69,7 +109,22 @@ namespace SoftLiu_DataStructCSharp.GraphUtility
         /// <returns></returns>
         public QueueList<EdgeDirected> pathTo(int v)
         {
-            return null;
+            // 判断从顶点 s 到顶点v是否可达
+            if (!this.hasPathTo(v))
+            {
+                return null;
+            }
+            // 创建队列对象
+            QueueList<EdgeDirected> allEdges = new QueueList<EdgeDirected>();
+            while (true)
+            {
+                EdgeDirected e = this.edgeTo[v];
+                if (e == null) break;
+
+                allEdges.enqueue(e);
+                v = e.from();
+            }
+            return allEdges;
         }
     }
 }
