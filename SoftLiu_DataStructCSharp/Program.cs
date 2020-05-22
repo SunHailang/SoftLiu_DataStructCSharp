@@ -1,5 +1,6 @@
 ﻿using SoftLiu_DataStructCSharp.Data;
 using SoftLiu_DataStructCSharp.GraphUtility;
+using SoftLiu_DataStructCSharp.QuestionApplication;
 using SoftLiu_DataStructCSharp.QuestionApplication.AStar;
 using SoftLiu_DataStructCSharp.SequenceUtility;
 using SoftLiu_DataStructCSharp.SortUtility;
@@ -33,9 +34,11 @@ namespace SoftLiu_DataStructCSharp
             //TreeUtilityTest.Test();
             //GraphUtilityTest.Test();
             #region A Star
-            AStarPaogram aStar = new AStarPaogram();
-            aStar.Awake();
+            //AStarPaogram aStar = new AStarPaogram();
+            //aStar.Awake();
             #endregion
+
+            QuestionProgram.Awake();
 
             Console.Write("\nAny Key Continue...");
             Console.Read();
@@ -122,6 +125,7 @@ namespace SoftLiu_DataStructCSharp
             Stopwatch sw = new Stopwatch();
             sw.Start();
             IEnumerator tor = list.GetEnumerator();
+
             while (tor.MoveNext())
             {
                 if (tor.Current is Student)

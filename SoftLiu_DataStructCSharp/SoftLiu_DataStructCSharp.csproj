@@ -62,7 +62,10 @@
     <Compile Include="GraphUtility\TopoLogicalOrder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestionApplication\AddTwoNumbers.cs" />
     <Compile Include="QuestionApplication\AStar\AStarPaogram.cs" />
+    <Compile Include="QuestionApplication\QuestionProgram.cs" />
+    <Compile Include="QuestionApplication\SumOfTwoNumbers.cs" />
     <Compile Include="SequenceUtility\LinkList.cs" />
     <Compile Include="SequenceUtility\SymbolOrderTable.cs" />
     <Compile Include="SequenceUtility\QueueList.cs" />

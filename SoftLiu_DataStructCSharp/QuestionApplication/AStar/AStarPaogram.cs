@@ -238,7 +238,7 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication.AStar
             {0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0 },
             {0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0 },
             {0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0 },
-            {0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0 },
+            {0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1 },
             {0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0 }
 
         };
@@ -265,8 +265,50 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication.AStar
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
+            int endX = this.arrary.GetLength(0) - 1;
+            int endY = this.arrary.GetLength(1) - 1;
+            Console.WriteLine("befor End: " + endX + " -> " + endY);
+            Spot startP = new Spot(0, 0);
+            if (this.arrary[endX, endY] != 0)
+            {
+                List<Spot> hashPoints = new List<Spot>();
+                while (this.arrary[endX, endY] != 0)
+                {
+                    // 找到最近一个非障碍物的点
+                    List<Spot> list = new List<Spot>();
+                    Spot s1 = new Spot(endX, endY);
+                    if (s1 != null)
+                    {
+                        // 获取上下左右4个点的坐标并判断有效性
+                        for (int i = 0; i < 4; i++)
+                        {
+                            int x = s1.x + this.stepArray[i, 0];
+                            int y = s1.y + this.stepArray[i, 1];
+                            // 坐标越界判断
+                            if (x < 0 || x >= this.arrary.GetLength(0) || y < 0 || y >= this.arrary.GetLength(1))
+                            {
+                                continue;
+                            }
+                            list.Add(new Spot(x, y));
+                        }
+                    }
+                    // 计算所有节点的期望步数
+                    foreach (Spot s in list)
+                    {
+                        s.InitSpot(s, startP);
+                        if (!hashPoints.Contains(s))
+                            hashPoints.Add(s);
+                    }
+                    Spot min = GetMinSpot(hashPoints);
+                    if (min != null)
+                    {
+                        endX = min.x;
+                        endY = min.y;
+                    }
+                }
+            }
 
-            Spot spot = AstarSearch(new Spot(0, 0), new Spot(this.arrary.GetLength(0) - 1, this.arrary.GetLength(1) - 1));
+            Spot spot = AstarSearch(startP, new Spot(endX, endY));
             if (spot == null)
                 Console.WriteLine("Not Find.");
             else

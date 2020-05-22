@@ -49,7 +49,7 @@ namespace SoftLiu_DataStructCSharp.SequenceUtility
             return this.N;
         }
 
-        public bool isEnpty()
+        public bool isEmpty()
         {
             return this.N <= 0;
         }
@@ -134,7 +134,7 @@ namespace SoftLiu_DataStructCSharp.SequenceUtility
         public void reverse()
         {
             // 判断当前链表是否时空链表， 如果是 则结束运行， 否则 调用 重载的 reverse 方法翻转
-            if (isEnpty()) return;
+            if (isEmpty()) return;
 
             reverse(this.head.next);
         }
@@ -187,5 +187,6 @@ namespace SoftLiu_DataStructCSharp.SequenceUtility
                 yield return get(i);
             }
         }
+
     }
 }
