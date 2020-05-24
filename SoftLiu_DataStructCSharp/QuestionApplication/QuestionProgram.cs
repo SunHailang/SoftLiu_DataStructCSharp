@@ -13,7 +13,11 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             // 两数和  算法
             //SumOfTwoNumbers.Awake();
             // 两数相加 算法
-            AddTwoNumbers.Awake();
+            //AddTwoNumbers.Awake();
+            // 无重复字符的最长子串
+            //LongestStringWithoutRepetition.Awake();
+            // 寻找两个正序数组的中位数
+            FindTheMedian.Awake();
         }
     }
 }

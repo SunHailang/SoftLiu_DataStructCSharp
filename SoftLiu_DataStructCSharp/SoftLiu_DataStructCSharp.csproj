@@ -64,6 +64,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionApplication\AddTwoNumbers.cs" />
     <Compile Include="QuestionApplication\AStar\AStarPaogram.cs" />
+    <Compile Include="QuestionApplication\FindTheMedian.cs" />
+    <Compile Include="QuestionApplication\LongestStringWithoutRepetition.cs" />
     <Compile Include="QuestionApplication\QuestionProgram.cs" />
     <Compile Include="QuestionApplication\SumOfTwoNumbers.cs" />
     <Compile Include="SequenceUtility\LinkList.cs" />

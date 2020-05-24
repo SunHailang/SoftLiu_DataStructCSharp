@@ -19,8 +19,98 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
         假设除了数字 0 之外，这两个数都不会以 0 开头。
         */
 
+        
+
 
         public static void Awake()
+        {
+
+            AddNew();
+
+            //LinkList<int> queue = Add();
+
+
+            //Console.WriteLine(queue.length());
+            //IEnumerator ie = queue.GetEnumerator();
+            //while (ie.MoveNext())
+            //{
+            //    int q = (int)ie.Current;
+            //    Console.Write(q + ",");
+            //}
+        }
+
+        #region 优化后的
+        public class ListNode
+        {
+            public int val;
+            public ListNode next;
+            public ListNode(int x) { val = x; }
+        }
+        private static void push(ListNode head, ref ListNode last, ListNode node)
+        {
+            // 当前last==null
+            if (last == null)
+            {
+                last = node;
+                head.next = last;
+            }
+            else
+            {
+                ListNode oldLast = last;
+                last = node;
+                oldLast.next = last;
+            }
+        }
+
+        private static void AddNew()
+        {
+            ListNode listA = new ListNode(2);
+            listA.next = new ListNode(4);
+            listA.next.next = new ListNode(3);
+
+            ListNode listB = new ListNode(5);
+            listB.next = new ListNode(6);
+            listB.next.next = new ListNode(4);
+
+            ListNode firstNode = new ListNode(int.MaxValue);
+
+            ListNode lastNode = null;
+
+            int comSum = 0;
+
+            while (true)
+            {
+                if (listA == null && listB == null)
+                {
+                    if (comSum > 0)
+                    {
+                        push(firstNode, ref lastNode, new ListNode(comSum));
+                    }
+                    break;
+                }
+                int sum = (listA == null ? 0 : listA.val) + (listB == null ? 0 : listB.val) + comSum;
+                comSum = sum / 10;
+                push(firstNode, ref lastNode, new ListNode(sum % 10));
+
+
+                if (listA != null)
+                    listA = listA.next;
+                if (listB != null)
+                    listB = listB.next;
+            }
+            firstNode = firstNode.next;
+            while (firstNode != null)
+            {
+                Console.Write(firstNode.val + ",");
+                firstNode = firstNode.next;
+            }
+        }
+
+        #endregion
+
+        #region 我自己写的
+
+        private static LinkList<int> Add()
         {
             LinkList<int> listA = new LinkList<int>();
             listA.insert(3);
@@ -31,21 +121,6 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             listB.insert(0);
             listB.insert(2);
 
-
-            LinkList<int> queue = Add(listA, listB);
-
-
-            Console.WriteLine(queue.length());
-            IEnumerator ie = queue.GetEnumerator();
-            while (ie.MoveNext())
-            {
-                int q = (int)ie.Current;
-                Console.Write(q + ",");
-            }
-        }
-
-        private static LinkList<int> Add(LinkList<int> listA, LinkList<int> listB)
-        {
             int lengthA = listA.length();
             int lengthB = listB.length();
             LinkList<int> queue = new LinkList<int>();
@@ -67,7 +142,7 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
                 common = 0;
                 int x = sum / 10;
                 int y = sum % 10;
-                
+
                 queue.insert(y);
                 if (x > 0)
                 {
@@ -84,5 +159,6 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
 
             return queue;
         }
+        #endregion
     }
 }
