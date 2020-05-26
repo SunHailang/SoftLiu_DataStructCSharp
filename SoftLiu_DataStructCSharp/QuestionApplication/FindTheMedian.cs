@@ -62,6 +62,7 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
                     }
                     break;
                 }
+                // A B 为有序列表
                 if (arrayA[i] < arrayB[j])
                 {
                     arrayNums[count++] = arrayA[i++];
