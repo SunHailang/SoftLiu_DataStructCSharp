@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SoftLiu_DataStructCSharp.TreeUtility;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -244,17 +245,7 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication.AStar
         };
 
 
-        List<Spot> readyList = new List<Spot>();
-        List<Spot> visitedList = new List<Spot>();
-        /// <summary>
-        /// 定义上下左右方向
-        /// </summary>
-        int[,] stepArray = {
-            { 0, 1 },
-            { 0, -1 },
-            { 1, 0 },
-            { -1, 0 }
-        };
+        private Grid grid;
 
         public void Awake()
         {
@@ -263,256 +254,101 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication.AStar
 
         private void Init()
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            int endX = this.arrary.GetLength(0) - 1;
-            int endY = this.arrary.GetLength(1) - 1;
-            Console.WriteLine("befor End: " + endX + " -> " + endY);
-            Spot startP = new Spot(0, 0);
-            if (this.arrary[endX, endY] != 0)
+            grid = new Grid(this.arrary);
+
+            while (true)
             {
-                List<Spot> hashPoints = new List<Spot>();
-                while (this.arrary[endX, endY] != 0)
-                {
-                    // 找到最近一个非障碍物的点
-                    List<Spot> list = new List<Spot>();
-                    Spot s1 = new Spot(endX, endY);
-                    if (s1 != null)
-                    {
-                        // 获取上下左右4个点的坐标并判断有效性
-                        for (int i = 0; i < 4; i++)
-                        {
-                            int x = s1.x + this.stepArray[i, 0];
-                            int y = s1.y + this.stepArray[i, 1];
-                            // 坐标越界判断
-                            if (x < 0 || x >= this.arrary.GetLength(0) || y < 0 || y >= this.arrary.GetLength(1))
-                            {
-                                continue;
-                            }
-                            list.Add(new Spot(x, y));
-                        }
-                    }
-                    // 计算所有节点的期望步数
-                    foreach (Spot s in list)
-                    {
-                        s.InitSpot(s, startP);
-                        if (!hashPoints.Contains(s))
-                            hashPoints.Add(s);
-                    }
-                    Spot min = GetMinSpot(hashPoints);
-                    if (min != null)
-                    {
-                        endX = min.x;
-                        endY = min.y;
-                    }
-                }
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                Spot start = grid.GetGridSpot(0, 0);
+                Spot end = grid.GetGridSpot(grid.gridCountX - 1, grid.gridCountY - 1);
+                Spot spot = AstarSearch(start, end);
+                if (spot == null)
+                    Console.WriteLine("Not Find.");
+                else
+                    Console.WriteLine(spot.x + " -> " + spot.y);
+
+                sw.Stop();
+                Console.WriteLine("total time: " + sw.ElapsedMilliseconds);
+                Console.WriteLine("A Star Initl Finised.");
+
+                Console.Read();
             }
-
-            Spot spot = AstarSearch(startP, new Spot(endX, endY));
-            if (spot == null)
-                Console.WriteLine("Not Find.");
-            else
-                Console.WriteLine(spot.x + " -> " + spot.y);
-
-            sw.Stop();
-            Console.WriteLine("total time: " + sw.ElapsedMilliseconds);
-            Console.WriteLine("A Star Initl Finised.");
+           
         }
 
         private Spot AstarSearch(Spot start, Spot end)
         {
+            HeapMinPriority<Spot> openList = new HeapMinPriority<Spot>(grid.Count);
+            List<Spot> closeList = new List<Spot>();
             // 将起点加入到待访问队列
-            this.readyList.Add(start);
+            openList.insert(start);
 
-            while (this.readyList.Count > 0)
+            int minDistance = int.MaxValue;
+            Spot nearest = start;
+            while (openList.Count > 0)
             {
                 // 获取待访问列表期望值最小的节点
-                Spot min = GetMinSpot(this.readyList);
-                if (min == null) break;
                 // 将该节点 从readyList移除，存放到visitedList列表中
-                this.readyList.Remove(min);
-                this.visitedList.Add(min);
-                // 找到最小节点周围所有可访问的节点
-                List<Spot> list = FindNeighbour(min);
-                for (int i = 0; i < list.Count; i++)
+                Spot currentSpot = openList.delMin();
+                closeList.Add(currentSpot);
+
+                if (currentSpot == end)
                 {
-                    Spot spot = list[i];
+                    return end;
+                }
+
+                // 找到最小节点周围所有可访问的节点
+                List<Spot> list = grid.GetNeighbours(currentSpot);
+                foreach (Spot spot in list)
+                {
+                    if (!spot.walkAble || closeList.Contains(spot)) continue;
                     // 计算所有节点的期望步数
-                    spot.InitSpot(min, end);
+                    int cost = currentSpot.gCost + GetDistence(currentSpot, spot);
                     // 判断readyList是否在同一坐标点
                     // 如果在，则比较期望值，获取最小的一个， 保存到readyList
                     // 如果不在，则直接保存到readyList
-                    Spot temp = FindSpot(this.readyList, spot.x, spot.y);
-                    if (temp == null)
+                    if (cost < spot.gCost || !openList.containsItem(spot))
                     {
-                        readyList.Add(spot);
+                        spot.gCost = cost;
+                        spot.hCost = GetDistence(spot, end);
+                        spot.parent = currentSpot;
+                        
+                        if (!openList.containsItem(spot))
+                        {
+                            openList.insert(spot);
+                            // 检测是否是当前最近可走的点
+                            int distance = Math.Abs(spot.x - end.x) + Math.Abs(spot.y - end.y);
+                            if (distance < minDistance)
+                            {
+                                minDistance = distance;
+                                nearest = spot;
+                            }
+                        }
+                        else
+                        {
+                            openList.updateItem(spot);
+                        }
                     }
-                    else if (spot.GetF() < temp.GetF())
-                    {
-                        this.readyList.Remove(temp);
-                        this.readyList.Add(spot);
-                    }
-                }
-                // 判断终点是否在列表中，在，直接返回
-                Spot tmp = FindSpot(this.readyList, end.x, end.y);
-                if (tmp != null)
-                {
-                    return tmp;
                 }
             }
-            // 可访问节点是空，找不到路径 返回null
-            return null;
+
+            // 走到这里说明 目标点不可达， 返回最近节点
+            return nearest;
         }
 
-        /// <summary>
-        /// 找到指定节点周围所有的可访问节点
-        /// </summary>
-        /// <param name="spot"></param>
-        /// <returns></returns>
-        private List<Spot> FindNeighbour(Spot spot)
+
+        private int GetDistence(Spot nodeA, Spot nodeB)
         {
-            List<Spot> list = new List<Spot>();
-            if (spot != null)
+            int dstX = Math.Abs(nodeA.x - nodeB.x);
+            int dstY = Math.Abs(nodeA.y - nodeB.y);
+            if (dstX > dstY)
             {
-                // 获取上下左右4个点的坐标并判断有效性
-                for (int i = 0; i < 4; i++)
-                {
-                    int x = spot.x + this.stepArray[i, 0];
-                    int y = spot.y + this.stepArray[i, 1];
-                    // 坐标越界判断
-                    if (x < 0 || x >= this.arrary.GetLength(0) || y < 0 || y >= this.arrary.GetLength(1))
-                    {
-                        continue;
-                    }
-                    // 判断是否存在障碍物
-                    if (arrary[x, y] != 0)
-                        continue;
-                    // 判断是否在已访问的点
-                    if (FindSpot(this.visitedList, x, y) != null)
-                    {
-                        continue;
-                    }
-                    list.Add(new Spot(x, y));
-                }
+                return 14 * dstY + 10 * (dstX - dstY);
             }
-            return list;
-        }
-        /// <summary>
-        /// 在指定列表中寻找对应的坐标点
-        /// </summary>
-        /// <param name="spots"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        private Spot FindSpot(List<Spot> spots, int x, int y)
-        {
-            if (spots == null || spots.Count <= 0)
-                return null;
-            // 根据坐标寻找节点
-            for (int i = 0; i < spots.Count; i++)
-            {
-                if (spots[i].x == x && spots[i].y == y)
-                {
-                    return spots[i];
-                }
-            }
-            return null;
+            return 14 * dstX + 10 * (dstY - dstX);
         }
 
-        /// <summary>
-        /// 获取spots中期望步数最小的点
-        /// </summary>
-        /// <param name="spots"></param>
-        /// <returns></returns>
-        private Spot GetMinSpot(List<Spot> spots)
-        {
-            // 入参校验
-            if (spots == null || spots.Count <= 0)
-            {
-                return null;
-            }
-
-            // 获取期望值最小的点
-            Spot min = spots[0];
-            for (int i = 1; i < spots.Count; i++)
-            {
-                if (spots[i].GetF() < min.GetF())
-                {
-                    min = spots[i];
-                }
-            }
-
-            return min;
-        }
-
-
-
-        private class Spot
-        {
-            /// <summary>
-            /// 行坐标
-            /// </summary>
-            public int x = 0;
-            /// <summary>
-            /// 列坐标
-            /// </summary>
-            public int y = 0;
-            /// <summary>
-            /// 已使用的步数 G
-            /// 从开始节点 到当前节点 已使用的步数
-            /// </summary>
-            int usedSteps;
-            /// <summary>
-            /// 无视障碍距离 H
-            /// 当前节点到目标节点无视障碍的距离
-            /// </summary>
-            int distence;
-            /// <summary>
-            /// F
-            /// 期望步数 = 已使用的步数 + 无视障碍的距离 
-            /// </summary>
-            int expectedSteps;
-
-            /// <summary>
-            /// 父节点 打印时候用到
-            /// </summary>
-            Spot parent;
-
-            /// <summary>
-            /// 构造函数
-            /// </summary>
-            public Spot(int x, int y)
-            {
-                this.x = x;
-                this.y = y;
-            }
-            /// <summary>
-            /// 根据父节点和目标节点，初始化已使用的步数，无视障碍的距离，期望步数，和父节点
-            /// </summary>
-            /// <param name="parent"></param>
-            /// <param name="end"></param>
-            public void InitSpot(Spot parent, Spot end)
-            {
-                this.parent = parent;
-
-                // 已使用的步数 = 父节点已使用的步数 + 1
-                if (this.parent == null)
-                {
-                    this.usedSteps = 1;
-                }
-                else
-                {
-                    usedSteps = this.parent.usedSteps + 1;
-                }
-                this.distence = Math.Abs(this.x - end.x) + Math.Abs(this.y - end.y);
-            }
-
-
-            public int GetF()
-            {
-                return this.usedSteps + this.distence;
-            }
-        }
 
     }
 }

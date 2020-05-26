@@ -64,6 +64,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionApplication\AddTwoNumbers.cs" />
     <Compile Include="QuestionApplication\AStar\AStarPaogram.cs" />
+    <Compile Include="QuestionApplication\AStar\Grid.cs" />
+    <Compile Include="QuestionApplication\AStar\Spot.cs" />
     <Compile Include="QuestionApplication\FindTheMedian.cs" />
     <Compile Include="QuestionApplication\LongestStringWithoutRepetition.cs" />
     <Compile Include="QuestionApplication\QuestionProgram.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="TreeUtility\HeapSort.cs" />
     <Compile Include="TreeUtility\IndexMinPriorityQueue.cs" />
     <Compile Include="TreeUtility\MaxPriorityQueue.cs" />
+    <Compile Include="TreeUtility\HeapMinPriority.cs" />
     <Compile Include="TreeUtility\MinPriorityQueue.cs" />
     <Compile Include="TreeUtility\QuadTree.cs" />
     <Compile Include="TreeUtility\RedBlackTree.cs" />

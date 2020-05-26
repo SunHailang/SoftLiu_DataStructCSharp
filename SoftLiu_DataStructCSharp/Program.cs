@@ -34,11 +34,11 @@ namespace SoftLiu_DataStructCSharp
             //TreeUtilityTest.Test();
             //GraphUtilityTest.Test();
             #region A Star
-            //AStarPaogram aStar = new AStarPaogram();
-            //aStar.Awake();
+            AStarPaogram aStar = new AStarPaogram();
+            aStar.Awake();
             #endregion
 
-            QuestionProgram.Awake();
+            //QuestionProgram.Awake();
 
             Console.Write("\nAny Key Continue...");
             Console.Read();

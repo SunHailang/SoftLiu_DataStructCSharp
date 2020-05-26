@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SoftLiu_DataStructCSharp.TreeUtility
 {
     /// <summary>
-    /// 堆  完全二叉树
+    /// 堆  完全二叉树 (最大优先堆)
     /// 堆中 父节点都是大于他的两个子节点
     /// </summary>
     public class Heap<T> where T : IComparable
