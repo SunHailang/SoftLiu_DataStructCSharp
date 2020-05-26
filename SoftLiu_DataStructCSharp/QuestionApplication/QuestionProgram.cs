@@ -28,7 +28,38 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             // 旋转链表
             //RotatingLinkedList.Awake();
             // Z 字形变换
-            ZShapedTransformation.Awake();
+            //ZShapedTransformation.Awake();
+            test1();
+        }
+        /// <summary>
+        /// 整数反转
+        /// </summary>
+        private static void test1()
+        {
+            int x = 1534236469;
+            StringBuilder sb = new StringBuilder();
+            string str = x.ToString();
+
+            int start = 0;
+            if (x < 0)
+            {
+                sb.Append(str[0]);
+                start++;
+            }
+            for (int i = str.Length -1; i >= start; i--)
+            {
+                sb.Append(str[i]);
+            }
+            try
+            {
+                Convert.ToInt32(sb.ToString());
+            }
+            catch (Exception error)
+            {
+                Console.WriteLine(error.Message);
+            }
+            
+            //Console.WriteLine(int.Parse(sb.ToString()));
         }
     }
 }
