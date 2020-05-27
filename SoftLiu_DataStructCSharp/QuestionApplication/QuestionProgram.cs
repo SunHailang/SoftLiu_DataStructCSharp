@@ -29,7 +29,9 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             //RotatingLinkedList.Awake();
             // Z 字形变换
             //ZShapedTransformation.Awake();
-            test1();
+            //test1();
+            // 有效的括号
+            ValidParenthesis.Awake();
         }
         /// <summary>
         /// 整数反转
