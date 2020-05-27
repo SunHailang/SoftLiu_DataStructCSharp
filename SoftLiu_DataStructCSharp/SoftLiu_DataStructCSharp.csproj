@@ -67,6 +67,7 @@
     <Compile Include="QuestionApplication\AStar\Grid.cs" />
     <Compile Include="QuestionApplication\AStar\Spot.cs" />
     <Compile Include="QuestionApplication\DeleteLinkedListNth.cs" />
+    <Compile Include="QuestionApplication\DivisionOfTwoNumbers.cs" />
     <Compile Include="QuestionApplication\FindTheMedian.cs" />
     <Compile Include="QuestionApplication\LongestStringWithoutRepetition.cs" />
     <Compile Include="QuestionApplication\QuestionProgram.cs" />

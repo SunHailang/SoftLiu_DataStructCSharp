@@ -31,7 +31,9 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             //ZShapedTransformation.Awake();
             //test1();
             // 有效的括号
-            ValidParenthesis.Awake();
+            //ValidParenthesis.Awake();
+            // 两数相除
+            DivisionOfTwoNumbers.Awake();
         }
         /// <summary>
         /// 整数反转

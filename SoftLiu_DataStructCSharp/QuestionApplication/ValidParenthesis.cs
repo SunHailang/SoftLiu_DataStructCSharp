@@ -14,7 +14,7 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
     {
         public static void Awake()
         {
-            string s = "()()((";
+            string s = "(()()((";
             //bool result = IsValid(s);
             //Console.WriteLine(result);
 
@@ -67,36 +67,52 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
         /// <returns></returns>
         private static int LongestValidParentheses(string s)
         {
-            int longest = 0;
+            int maxans = 0;
+            int[] dp = new int[s.Length];
 
-            int count = 0;
+            for (int i = 1; i < s.Length; i++)
+            {
+                if (s[i] == ')')
+                {
+                    if (s[i - 1] == '(')
+                    {
+                        dp[i] = (i >= 2 ? dp[i - 2] : 0) + 2;
+                    }
+                    else if (i - dp[i - 1] > 0 && s[i - dp[i - 1] - 1] == '(')
+                    {
+                        dp[i] = dp[i - 1] + ((i - dp[i - 1]) >= 2 ? dp[i - dp[i - 1] - 2] : 0) + 2;
+                    }
+                    maxans = Math.Max(maxans, dp[i]);
+                }
+            }
+            return maxans;
+        }
 
-            Stack<char> stack = new Stack<char>();
-
+        private static int LongestValidPar1(string s)
+        {
+            int maxans = 0;
+            Stack<int> stack = new Stack<int>();
+            stack.Push(-1);
             for (int i = 0; i < s.Length; i++)
             {
-                char c = s[i];
-                if (c == '(')
+                if (s[i] == '(')
                 {
-                    stack.Push(c);
+                    stack.Push(i);
                 }
                 else
                 {
-                    if (stack.Count > 0)
+                    stack.Pop();
+                    if (stack.Count <= 0)
                     {
-                        char x = stack.Pop();
-                        count++;
+                        stack.Push(i);
                     }
                     else
                     {
-                        count = 0;
+                        maxans = Math.Max(maxans, i - stack.Peek());
                     }
-
-                    longest = Math.Max(longest, count * 2);
                 }
             }
-            return longest - longest % 2;
+            return maxans;
         }
-
     }
 }
