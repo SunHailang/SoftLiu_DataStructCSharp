@@ -65,7 +65,15 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
         }
 
 
-
+        /// <summary>
+        /// a/b , 用b翻n番 去试探是否能达到a
+        ///比如，7除以2， 2不翻番为2，没达到，2翻一番为4，没达到；2翻两番为8，超过了，于是商就是2加上（7-4）/2（递归出现了）
+        ///左移n，就是翻n番
+        ///溢出，可以用long接管int来解决
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
         private static int divide(int dividend, int divisor)
         {
             if (divisor == 1) return dividend;

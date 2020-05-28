@@ -33,7 +33,9 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             // 有效的括号
             //ValidParenthesis.Awake();
             // 两数相除
-            DivisionOfTwoNumbers.Awake();
+            //DivisionOfTwoNumbers.Awake();
+            // 字符串转换整数 (atoi)
+            StringToIntegerConversion.Awake();
         }
         /// <summary>
         /// 整数反转
