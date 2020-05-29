@@ -26,7 +26,7 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             // 删除链表的倒数第N个节点
             //DeleteLinkedListNth.Awake();
             // 旋转链表
-            //RotatingLinkedList.Awake();
+            RotatingLinkedList.Awake();
             // Z 字形变换
             //ZShapedTransformation.Awake();
             //test1();
@@ -35,7 +35,11 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             // 两数相除
             //DivisionOfTwoNumbers.Awake();
             // 字符串转换整数 (atoi)
-            StringToIntegerConversion.Awake();
+            //StringToIntegerConversion.Awake();
+            // 删除排序数组中的重复项
+            //RemoveDuplicates.Awake();
+            // 15. 三数之和
+            //ThreeSum.Awake();
         }
         /// <summary>
         /// 整数反转

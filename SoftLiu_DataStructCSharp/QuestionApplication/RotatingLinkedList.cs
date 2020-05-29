@@ -30,22 +30,86 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             ListNode head = new ListNode(1);
             ListNode head1 = new ListNode(2);
             head.next = head1;
-            ListNode head2 = new ListNode(3);
+            ListNode head2 = new ListNode(4);
             head1.next = head2;
-            ListNode head3 = new ListNode(4);
-            head2.next = head3;
-            ListNode head4 = new ListNode(5);
+
+            ListNode head3 = new ListNode(1);
+            ListNode head4 = new ListNode(3);
             head3.next = head4;
-            int k = 3;
-            ListNode node = RotateRight(head, k);
+            ListNode head5 = new ListNode(4);
+            head4.next = head5;
+            ListNode head6 = new ListNode(4);
+            head5.next = head6;
+
+            //int k = 3;
+            //ListNode node = RotateRight(head, k);
+            //while (node != null)
+            //{
+            //    Console.WriteLine(node.val);
+            //    node = node.next;
+            //}
+
+            ListNode node = MergeTwoLists(head, head3);
             while (node != null)
             {
                 Console.WriteLine(node.val);
                 node = node.next;
             }
+            Console.WriteLine();
+        }
+        /// <summary>
+        /// 合并两个有序列表
+        /// </summary>
+        /// <param name="l1"></param>
+        /// <param name="l2"></param>
+        /// <returns></returns>
+        private static ListNode MergeTwoLists(ListNode l1, ListNode l2)
+        {
+
+            if (l1 == null && l2 == null) return null;
+            if (l1 == null && l2 != null) return l2;
+            if (l1 != null && l2 == null) return l1;
+
+            ListNode head = new ListNode(-1);
+            ListNode first = head;
+
+            while (l1 != null || l2 != null)
+            {
+                if (l1 == null)
+                {
+                    first.next = l2;//new ListNode(l2.val);                    
+                    l2 = l2.next;
+                }
+                else if (l2 == null)
+                {
+                    first.next = l1;//new ListNode(l1.val);
+                    l1 = l1.next;
+                }
+                else
+                {
+                    if (l1.val > l2.val)
+                    {
+                        first.next = l2;// new ListNode(l2.val);
+                        l2 = l2.next;
+                    }
+                    else
+                    {
+                        first.next = l1;// new ListNode(l1.val);
+                        l1 = l1.next;
+                    }
+                }
+                first = first.next;
+            }
+
+            return head.next;
         }
 
-
+        /// <summary>
+        /// 旋转列表
+        /// </summary>
+        /// <param name="head"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
         private static ListNode RotateRight(ListNode head, int k)
         {
             // 链表可以为空

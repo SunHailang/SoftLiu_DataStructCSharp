@@ -71,9 +71,11 @@
     <Compile Include="QuestionApplication\FindTheMedian.cs" />
     <Compile Include="QuestionApplication\LongestStringWithoutRepetition.cs" />
     <Compile Include="QuestionApplication\QuestionProgram.cs" />
+    <Compile Include="QuestionApplication\RemoveDuplicates.cs" />
     <Compile Include="QuestionApplication\RotatingLinkedList.cs" />
     <Compile Include="QuestionApplication\StringToIntegerConversion.cs" />
     <Compile Include="QuestionApplication\SumOfTwoNumbers.cs" />
+    <Compile Include="QuestionApplication\ThreeSum.cs" />
     <Compile Include="QuestionApplication\ValidParenthesis.cs" />
     <Compile Include="QuestionApplication\ZShapedTransformation.cs" />
     <Compile Include="SequenceUtility\LinkList.cs" />
