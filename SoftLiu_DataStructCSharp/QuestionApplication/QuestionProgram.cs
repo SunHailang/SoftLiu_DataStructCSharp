@@ -26,7 +26,7 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             // 删除链表的倒数第N个节点
             //DeleteLinkedListNth.Awake();
             // 旋转链表
-            RotatingLinkedList.Awake();
+            //RotatingLinkedList.Awake();
             // Z 字形变换
             //ZShapedTransformation.Awake();
             //test1();
@@ -40,6 +40,10 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             //RemoveDuplicates.Awake();
             // 15. 三数之和
             //ThreeSum.Awake();
+            // 最长公共前缀
+            //LongestCommonPrefix.Awake();
+            //盛最多水的容器
+            ContainerForTheMostWater.Awake();
         }
         /// <summary>
         /// 整数反转
