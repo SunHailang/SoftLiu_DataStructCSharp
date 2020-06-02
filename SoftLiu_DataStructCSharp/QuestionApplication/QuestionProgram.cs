@@ -43,7 +43,9 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             // 最长公共前缀
             //LongestCommonPrefix.Awake();
             //盛最多水的容器
-            ContainerForTheMostWater.Awake();
+            //ContainerForTheMostWater.Awake();
+            // 回文数
+            Palindrome.Awake();
         }
         /// <summary>
         /// 整数反转

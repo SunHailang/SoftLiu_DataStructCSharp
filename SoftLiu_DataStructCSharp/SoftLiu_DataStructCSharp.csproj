@@ -72,6 +72,7 @@
     <Compile Include="QuestionApplication\FindTheMedian.cs" />
     <Compile Include="QuestionApplication\LongestCommonPrefix.cs" />
     <Compile Include="QuestionApplication\LongestStringWithoutRepetition.cs" />
+    <Compile Include="QuestionApplication\Palindrome.cs" />
     <Compile Include="QuestionApplication\QuestionProgram.cs" />
     <Compile Include="QuestionApplication\RemoveDuplicates.cs" />
     <Compile Include="QuestionApplication\RotatingLinkedList.cs" />
