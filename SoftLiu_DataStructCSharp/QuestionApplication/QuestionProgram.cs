@@ -45,7 +45,9 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             //盛最多水的容器
             //ContainerForTheMostWater.Awake();
             // 回文数
-            Palindrome.Awake();
+            //Palindrome.Awake();
+            // 整数 和 罗马数字 转换
+            IntegerAndRomanNumeral.Awake();
         }
         /// <summary>
         /// 整数反转

@@ -70,6 +70,7 @@
     <Compile Include="QuestionApplication\DeleteLinkedListNth.cs" />
     <Compile Include="QuestionApplication\DivisionOfTwoNumbers.cs" />
     <Compile Include="QuestionApplication\FindTheMedian.cs" />
+    <Compile Include="QuestionApplication\IntegerAndRomanNumeral.cs" />
     <Compile Include="QuestionApplication\LongestCommonPrefix.cs" />
     <Compile Include="QuestionApplication\LongestStringWithoutRepetition.cs" />
     <Compile Include="QuestionApplication\Palindrome.cs" />
