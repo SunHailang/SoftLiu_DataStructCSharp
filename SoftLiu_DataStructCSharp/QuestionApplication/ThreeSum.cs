@@ -21,18 +21,60 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
 
         public static void Awake()
         {
-            int[] nums = new int[] { -1, 0, 1, 2, -1, -4 };
+            int[] nums = new int[] {1, 1, -1, -1, 3};
             //IList<IList<int>> list = ThreeSumMethod(nums);
 
-            IList<IList<int>> list = threeSum(nums);
+            //IList<IList<int>> list = threeSum(nums);
+            //Console.WriteLine(list.Count);
+            int target = -1;
+            int result = ThreeSumClosest(nums, target);
 
-            Console.WriteLine(list.Count);
+            Console.WriteLine(result);
         }
+
+        #region 最接近的三数之和
+        private static int ThreeSumClosest(int[] nums, int target)
+        {
+            if (nums == null || nums.Length < 3) return -1;
+            int len = nums.Length;
+            Array.Sort(nums); // 排序
+
+            long result = int.MaxValue ;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (i > 0 && nums[i] == nums[i - 1]) continue; // 去重
+                int L = i + 1;
+                int R = len - 1;
+                while (L < R)
+                {
+                    long sum = nums[i] + nums[L] + nums[R];
+                    if (sum == target)
+                    {
+                        return (int)sum;
+                    }
+                    else if (sum > target)
+                    {
+                        result = Math.Abs(result - target) > Math.Abs(sum - target) ? sum : result;
+                        while (L < R && nums[R] == nums[R - 1]) R--; // 去重
+                        R--;
+                    }
+                    else if (sum < target)
+                    {
+                        result = Math.Abs(result - target) > Math.Abs(sum - target) ? sum : result;
+                        while (L < R && nums[L] == nums[L + 1]) L++; // 去重
+                        L++;
+                    }
+                }
+            }
+            return (int)result;
+        }
+        #endregion
 
         #region 4数之和
         public static IList<IList<int>> FourSumY(int[] nums, int target)
         {
-            
+
             IList<IList<int>> list = new List<IList<int>>();
             if (nums == null || nums.Length < 4) return list;
             Array.Sort(nums);

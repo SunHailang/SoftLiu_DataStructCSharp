@@ -75,6 +75,7 @@
     <Compile Include="QuestionApplication\LongestStringWithoutRepetition.cs" />
     <Compile Include="QuestionApplication\Palindrome.cs" />
     <Compile Include="QuestionApplication\QuestionProgram.cs" />
+    <Compile Include="QuestionApplication\RegularExpression.cs" />
     <Compile Include="QuestionApplication\RemoveDuplicates.cs" />
     <Compile Include="QuestionApplication\RotatingLinkedList.cs" />
     <Compile Include="QuestionApplication\StringToIntegerConversion.cs" />

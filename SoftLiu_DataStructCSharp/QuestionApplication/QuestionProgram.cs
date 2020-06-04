@@ -39,7 +39,7 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             // 删除排序数组中的重复项
             //RemoveDuplicates.Awake();
             // 15. 三数之和
-            //ThreeSum.Awake();
+            ThreeSum.Awake();
             // 最长公共前缀
             //LongestCommonPrefix.Awake();
             //盛最多水的容器
@@ -47,7 +47,9 @@ namespace SoftLiu_DataStructCSharp.QuestionApplication
             // 回文数
             //Palindrome.Awake();
             // 整数 和 罗马数字 转换
-            IntegerAndRomanNumeral.Awake();
+            //IntegerAndRomanNumeral.Awake();
+            //正则表达式匹配
+            //RegularExpression.Awake();
         }
         /// <summary>
         /// 整数反转
