@@ -28,14 +28,14 @@ namespace SoftLiu_DataStructCSharp
             //TwoWayLinkListTest();
             //StackListTest();
             //BracketsMatchTest();
-            //ReversePolishNotationTest();
+            ReversePolishNotationTest();
             //QueueListTest();
             //SymbolTableTest();
             //SymbolOrderTableTest();
             //TreeUtilityTest.Test();
             //GraphUtilityTest.Test();
 
-            QuestionProgram.Awake();
+            //QuestionProgram.Awake();
 
             Console.Write("\nAny Key Continue...");
             Console.Read();
@@ -393,17 +393,73 @@ namespace SoftLiu_DataStructCSharp
             Console.WriteLine("Brackets Match Result: " + isMatch);
         }
         /// <summary>
+        /// 中缀表达式 转 逆波兰表达式 -> 逆波兰表达式解决问题
         /// 逆波兰表达式 问题解决  用栈的思想
         /// 仅仅支持 + - * / 四则运算
         /// </summary>
         private static void ReversePolishNotationTest()
         {
+            //string[] str = new string[] { "1", "*", "(", "2", "+", "6", ")" };
+            string[] str = new string[] { "5", "*", "2", "+", "2", "*", "(", "3", "+", "4", ")", "-", "58", "/", "2" };
+            Stack<string> stack = new Stack<string>();
+            List<string> list = new List<string>();
+            for (int i = 0; i < str.Length; i++)
+            {
+                string data = str[i];
+                switch (data)
+                {
+                    case "(":
+                        stack.Push("(");
+                        break;
+                    case ")":
+                        while (stack.Count > 0)
+                        {
+                            string data1 = stack.Pop();
+                            if (data1 == "(")
+                                break;
+                            list.Add(data1);
+                        }
+                        break;
+                    case "+":
+                        if (stack.Count > 0 && stack.Peek() != "(")
+                        {
+                            list.Add(stack.Pop());
+                        }
+                        stack.Push("+");
+                        break;
+                    case "-":
+                        if (stack.Count > 0 && stack.Peek() != "(")
+                        {
+                            list.Add(stack.Pop());
+                        }
+                        stack.Push("-");
+                        break;
+                    case "*":
+                        stack.Push("*");
+                        break;
+                    case "/":
+                        stack.Push("/");
+                        break;
+                    default:
+                        list.Add(data);
+                        break;
+                }
+            }
+            while (stack.Count > 0)
+            {
+                list.Add(stack.Pop());
+            }
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.Write(list[i]);
+            }
+            Console.WriteLine();
+
             // 中缀表达式  (3*(17-5)+18/6) = 9 转换成逆波兰表达式字符串数组
-            string[] notation = new string[] { "3", "17", "15", "-", "*", "18", "6", "/", "+" };
+            string[] notation = list.ToArray();//new string[] { "3", "17", "15", "-", "*", "18", "6", "/", "+" };
 
             // 定义一个栈存储操作数
             StackList<int> oprands = new StackList<int>();
-
             int result = 0;
             int o1;
             int o2;
