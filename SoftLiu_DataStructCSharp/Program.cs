@@ -28,11 +28,11 @@ namespace SoftLiu_DataStructCSharp
             //TwoWayLinkListTest();
             //StackListTest();
             //BracketsMatchTest();
-            ReversePolishNotationTest();
+            //ReversePolishNotationTest();
             //QueueListTest();
             //SymbolTableTest();
             //SymbolOrderTableTest();
-            //TreeUtilityTest.Test();
+            TreeUtilityTest.Test();
             //GraphUtilityTest.Test();
 
             //QuestionProgram.Awake();

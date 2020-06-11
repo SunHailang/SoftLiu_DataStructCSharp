@@ -29,7 +29,8 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
             //UnionFindTest();
             //UnionFindTreeTest();
             //UnionFindTreeWeightedTest();
-            UnionFindTreeWeightedRoad();
+            //UnionFindTreeWeightedRoad();
+            HuffmanTreeTest();
         }
         /// <summary>
         /// 四叉树的测试
@@ -439,6 +440,15 @@ namespace SoftLiu_DataStructCSharp.TreeUtility
 
             Console.WriteLine(string.Format("need {0} roads", roots));
         }
+        /// <summary>
+        /// 赫夫曼树测试
+        /// </summary>
+        private static void HuffmanTreeTest()
+        {
+            HuffmanTree tree = new HuffmanTree();
+            tree.Awake();
+        }
+
         /// <summary>
         /// 折纸问题
         /// </summary>

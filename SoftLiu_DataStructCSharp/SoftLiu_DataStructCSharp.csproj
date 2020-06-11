@@ -100,6 +100,7 @@
     <Compile Include="TreeUtility\BTree.cs" />
     <Compile Include="TreeUtility\Heap.cs" />
     <Compile Include="TreeUtility\HeapSort.cs" />
+    <Compile Include="TreeUtility\HuffmanTree\HuffmanTree.cs" />
     <Compile Include="TreeUtility\IndexMinPriorityQueue.cs" />
     <Compile Include="TreeUtility\MaxPriorityQueue.cs" />
     <Compile Include="TreeUtility\HeapMinPriority.cs" />
