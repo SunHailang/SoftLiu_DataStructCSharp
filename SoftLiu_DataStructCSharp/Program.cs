@@ -32,10 +32,12 @@ namespace SoftLiu_DataStructCSharp
             //QueueListTest();
             //SymbolTableTest();
             //SymbolOrderTableTest();
-            TreeUtilityTest.Test();
+            //TreeUtilityTest.Test();
             //GraphUtilityTest.Test();
 
             //QuestionProgram.Awake();
+
+            PathFinding.PathFindingTest.Testing();
 
             Console.Write("\nAny Key Continue...");
             Console.Read();
