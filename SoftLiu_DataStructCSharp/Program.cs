@@ -37,11 +37,42 @@ namespace SoftLiu_DataStructCSharp
 
             //QuestionProgram.Awake();
 
-            PathFinding.PathFindingTest.Testing();
+            // PathFinding.PathFindingTest.Testing();
 
+            IntToRom();
             Console.Write("\nAny Key Continue...");
             Console.Read();
         }
+
+
+        private static void IntToRom()
+        {
+            int[] nums = new int[] { 1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000 };
+            string[] strs = new string[] { "I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M" };
+
+            StringBuilder sb = new StringBuilder();
+            int index = 1;
+            while (index < 1000)
+            {
+                int num = index;
+                sb.Clear();
+                for (int i = nums.Length - 1; i >= 0; i--)
+                {
+                    int value = num / nums[i];
+
+                    for (int j = 0; j < value; j++)
+                    {
+                        sb.Append(strs[i]);
+                    }
+                    num -= nums[i] * value;
+                }
+                Console.WriteLine(sb.ToString());
+                index++;
+            }
+
+        }
+
+
         /// <summary>
         /// 排序测试
         /// </summary>
