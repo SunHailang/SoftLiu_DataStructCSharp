@@ -39,11 +39,36 @@ namespace SoftLiu_DataStructCSharp
 
             // PathFinding.PathFindingTest.Testing();
 
-            MergeKLists();
-
+            // MergeKLists();
+            Convert("PAYPALISHIRING", 3);
             Console.Write("\nAny Key Continue...");
             Console.Read();
         }
+
+
+        private static string Convert(string s, int numRows)
+        {
+            if (numRows == 1) return s;
+            int len = Math.Min(numRows, s.Length);
+            List<StringBuilder> rows = new List<StringBuilder>(len);
+            int curRow = 0;
+            bool goingDown = false;
+
+            foreach (char c in s)
+            {
+                if (rows.Count <= curRow) rows.Add(new StringBuilder());
+                rows[curRow].Append(c);
+                if (curRow == 0 || curRow == numRows - 1) goingDown = !goingDown;
+                curRow += goingDown ? 1 : -1;
+            }
+
+            StringBuilder ret = new StringBuilder();
+            foreach (StringBuilder row in rows) ret.Append(row.ToString());
+            return ret.ToString();
+        }
+
+
+
         /// <summary>
         /// 合并K个升序链表
         /// </summary>
