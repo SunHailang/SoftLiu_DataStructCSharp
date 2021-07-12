@@ -39,12 +39,128 @@ namespace SoftLiu_DataStructCSharp
 
             // PathFinding.PathFindingTest.Testing();
 
-            IntToRom();
+            MergeKLists();
+
             Console.Write("\nAny Key Continue...");
             Console.Read();
         }
+        /// <summary>
+        /// 合并K个升序链表
+        /// </summary>
+        /// <param name="lists"></param>
+        /// <returns></returns>
+        /// 
+        public class ListNode
+        {
+            public int val;
+            public ListNode next;
+            public ListNode(int val = 0, ListNode next = null)
+            {
+                this.val = val;
+                this.next = next;
+            }
+        }
+        private static ListNode MergeKLists()
+        {
+            ListNode[] lists = new ListNode[3];
+            ListNode node2 = new ListNode(5, null);
+            ListNode node1 = new ListNode(4, node2);
+            lists[0] = new ListNode(1, node1);
 
+            ListNode node4 = new ListNode(4, null);
+            ListNode node3 = new ListNode(3, node4);
+            lists[1] = new ListNode(1, node3);
 
+            ListNode node5 = new ListNode(6, null);
+            lists[2] = new ListNode(2, node5);
+
+            List<int> list = new List<int>(lists.Length);
+
+            ListNode node = null;
+            ListNode temp = node;
+            ListNode min = null;
+            int curIndex = 0;
+            while (true)
+            {
+                min = null;
+                for (int i = 0; i < lists.Length; i++)
+                {
+                    if (lists[i] != null)
+                    {
+                        if (min == null)
+                        {
+                            min = lists[i];
+                            curIndex = i;
+                        }
+                        else
+                        {
+                            if (min.val - lists[i].val > 0)
+                            {
+                                min = lists[i];
+                                curIndex = i;
+                            }
+                        }
+                    }
+                }
+
+                if (temp == null)
+                {
+                    temp = min;
+                    node = temp;
+                }
+                else
+                {
+                    temp.next = min;
+                    temp = temp.next;                    
+                }
+
+                if (min == null)
+                    break;
+                else
+                    lists[curIndex] = lists[curIndex].next;
+            }
+
+            return node;
+        }
+
+        /// <summary>
+        /// 小括号成对
+        /// </summary>
+        /// <param name="n"></param>
+        private static void GetPar(int n)
+        {
+            List<StringBuilder> sbAar = new List<StringBuilder>();
+            StringBuilder sb = new StringBuilder();
+
+            Gpar(sbAar, sb, 0, 0, n);
+
+            Console.WriteLine(sbAar.Count);
+        }
+
+        private static void Gpar(List<StringBuilder> sbAar, StringBuilder cur, int open, int close, int n)
+        {
+            if (cur.Length == n * 2)
+            {
+                sbAar.Add(cur);
+                return;
+            }
+            if (open < n)
+            {
+                cur.Append('(');
+                Gpar(sbAar, cur, open + 1, close, n);
+                cur.Remove(cur.Length - 1, 1);
+            }
+            if (close < open)
+            {
+                cur.Append(')');
+                Gpar(sbAar, cur, open, close + 1, n);
+                cur.Remove(cur.Length - 1, 1);
+            }
+        }
+
+        /// <summary>
+        /// 数字转罗马字符
+        /// </summary>
         private static void IntToRom()
         {
             int[] nums = new int[] { 1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000 };
