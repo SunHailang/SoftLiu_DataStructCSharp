@@ -45,7 +45,12 @@ namespace SoftLiu_DataStructCSharp
             Console.Read();
         }
 
-
+        /// <summary>
+        /// Z字符串
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="numRows"></param>
+        /// <returns></returns>
         private static string Convert(string s, int numRows)
         {
             if (numRows == 1) return s;
