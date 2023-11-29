@@ -20,6 +20,8 @@ namespace SoftLiu_DataStructCSharp
     {
         static void Main(string[] args)
         {
+            LeetCode.LeetCodeApp.Run();
+
             //SortTest();
             //SequenceTest();
             //LinkListTest();
@@ -38,9 +40,9 @@ namespace SoftLiu_DataStructCSharp
             //QuestionProgram.Awake();
 
             // PathFinding.PathFindingTest.Testing();
-
+            // IntToRom();
             // MergeKLists();
-            Convert("PAYPALISHIRING", 3);
+            // Console.WriteLine(Convert("PAYPALISHIRING", 3));
             Console.Write("\nAny Key Continue...");
             Console.Read();
         }

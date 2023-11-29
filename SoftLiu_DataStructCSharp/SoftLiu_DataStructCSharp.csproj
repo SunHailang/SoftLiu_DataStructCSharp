@@ -60,6 +60,9 @@
     <Compile Include="GraphUtility\KruskalMST.cs" />
     <Compile Include="GraphUtility\PrimMST.cs" />
     <Compile Include="GraphUtility\TopoLogicalOrder.cs" />
+    <Compile Include="LeetCode\LeetCodeApp.cs" />
+    <Compile Include="LeetCode\Time20231128.cs" />
+    <Compile Include="LeetCode\Time20231129.cs" />
     <Compile Include="PathFinding\PathFindingTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
