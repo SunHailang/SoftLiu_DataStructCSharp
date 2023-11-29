@@ -66,7 +66,7 @@ namespace SoftLiu_DataStructCSharp.LeetCode
 
             for (int i = 0; i < 1000; i++)
             {
-                set.add(i + 1);
+                set.Add(i + 1);
             }
 
             thers = 1;
@@ -74,7 +74,7 @@ namespace SoftLiu_DataStructCSharp.LeetCode
 
         public int PopSmallest()
         {
-            if (set == null)
+            if (set.Count <= 0)
             {
                 var data = thers;
                 thers++;
