@@ -18,28 +18,108 @@ namespace SoftLiu_DataStructCSharp.LeetCode
     {
         public static void Run()
         {
-            var val = -1;
-            var set = new SmallestInfiniteSet();
-            LogData(-1);
-            // [[],[2],[],[],[],[1],[],[],[]]
-            set.AddBack(2);
-            LogData(-1);
-            val = set.PopSmallest();
-            LogData(val);
-            set.AddBack(2);
-            LogData(-1);
-            val = set.PopSmallest();
-            LogData(val);
-            set.AddBack(1);
-            LogData(-1);
-            val = set.PopSmallest();
-            LogData(val);
-            val = set.PopSmallest();
-            LogData(val);
-            val = set.PopSmallest();
-            LogData(val);
+            //var val = -1;
+            //var set = new SmallestInfiniteSet();
+            //LogData(-1);
+            //// [[],[2],[],[],[],[1],[],[],[]]
+            //set.AddBack(2);
+            //LogData(-1);
+            //val = set.PopSmallest();
+            //LogData(val);
+            //set.AddBack(2);
+            //LogData(-1);
+            //val = set.PopSmallest();
+            //LogData(val);
+            //set.AddBack(1);
+            //LogData(-1);
+            //val = set.PopSmallest();
+            //LogData(val);
+            //val = set.PopSmallest();
+            //LogData(val);
+            //val = set.PopSmallest();
+            //LogData(val);
+            //var nums = new int[] { 1, 3, 5, 6 };
+            //Console.WriteLine(SearchInsert(nums, 2));
+            LetterCombinations("23");
         }
 
+        #region 17. 电话号码的字母组合
+        public static IList<string> LetterCombinations(string digits)
+        {
+            if (string.IsNullOrEmpty(digits)) return new List<string>();
+
+            Dictionary<char, char[]> keyValues = new Dictionary<char, char[]>
+            {
+                {'2', new char[]{ 'a', 'b', 'c'} },
+                {'3', new char[]{ 'd', 'e', 'f'} },
+                {'4', new char[]{ 'g', 'h', 'i'} },
+                {'5', new char[]{ 'j', 'k', 'l'} },
+                {'6', new char[]{ 'm', 'n', 'o'} },
+                {'7', new char[]{ 'p', 'q', 'r', 's'} },
+                {'8', new char[]{ 't', 'u', 'v'} },
+                {'9', new char[]{ 'w', 'x', 'y', 'z'} },
+            };
+
+            var sbList = new List<string>();
+            GetChar(0, digits, new StringBuilder(digits.Length), sbList, keyValues);
+            for (int i = 0; i < sbList.Count; i++)
+            {
+                Console.WriteLine(sbList[i]);
+            }
+
+            return sbList;
+        }
+
+        private static void GetChar(int index, string digits, StringBuilder sb, List<string> sbList, Dictionary<char, char[]> keyValues)
+        {
+            if (keyValues.TryGetValue(digits[index], out var data))
+            {
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sb.Append(data[i]);
+
+                    if (index == digits.Length - 1)
+                    {
+                        sbList.Add(sb.ToString());
+                    }
+                    if (index < digits.Length - 1)
+                    {
+                        GetChar(index + 1, digits, sb, sbList, keyValues);
+                    }
+
+                    sb.Remove(sb.Length - 1, 1);
+                }
+            }
+
+        }
+        #endregion
+        #region 35. 搜索插入位置
+        public static int SearchInsert(int[] nums, int target)
+        {
+            return Find(0, nums.Length - 1, nums, target);
+        }
+
+        private static int Find(int left, int right, int[] nums, int target)
+        {
+            if (nums[left] >= target) return left;
+            if (nums[right] == target) return right;
+            if (nums[right] < target) return right + 1;
+
+            if (right - left == 1)
+            {
+                return left + 1;
+            }
+
+            var mid = (left + right) / 2;
+            var value = nums[mid];
+            if (value == target) return mid;
+            if (value > target)
+            {
+                return Find(left, mid, nums, target);
+            }
+            return Find(mid, right, nums, target);
+        }
+        #endregion
         private static void LogData(int data)
         {
             var str = data < 0 ? "null" : $"{data}";

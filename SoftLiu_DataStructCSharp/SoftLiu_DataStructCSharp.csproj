@@ -63,6 +63,7 @@
     <Compile Include="LeetCode\LeetCodeApp.cs" />
     <Compile Include="LeetCode\Time20231128.cs" />
     <Compile Include="LeetCode\Time20231129.cs" />
+    <Compile Include="LeetCode\Time20231130.cs" />
     <Compile Include="PathFinding\PathFindingTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -11,7 +11,8 @@ namespace SoftLiu_DataStructCSharp.LeetCode
         public static void Run()
         {
             //Time20231128.Run();
-            Time20231129.Run();
+            //Time20231129.Run();
+            Time20231130.Run();
         }
     }
 }
