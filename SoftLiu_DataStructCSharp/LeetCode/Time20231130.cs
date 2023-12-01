@@ -19,16 +19,88 @@ namespace SoftLiu_DataStructCSharp.LeetCode
             //var ret = solution.CloseStrings(word1, word2); // true
             //Console.WriteLine($"Value:{ret}");
 
-            var nums = new int[] { 1, 2, 3, 4, 5, 6, 7 };
+            var nums = new int[] { 3, 1, 2, 4 };
             //RemoveElement(nums, 3);
 
-            Rotate(nums, 3);
-            for (int i = 0; i < nums.Length; i++)
-            {
-                Console.Write($"{nums[i]},");
-            }
+            //Rotate(nums, 3);
+            //for (int i = 0; i < nums.Length; i++)
+            //{
+            //    Console.Write($"{nums[i]},");
+            //}
+
+            Console.WriteLine(SumSubarrayMins(nums));
 
         }
+
+        public static int MinSwapsCouples(int[] row)
+        {
+            var count = 0;
+            for (int i = 0; i < row.Length - 1; i += 2)
+            {
+                var val = row[i];
+                var needVal = val % 2 == 0 ? val + 1 : val - 1;
+                for (int j = i + 1; j < row.Length; j++)
+                {
+                    if (row[j] == needVal)
+                    {
+                        if (j - i != 1)
+                        {
+                            var temp = row[j];
+                            row[j] = row[i + 1];
+                            row[i + 1] = temp;
+                            count++;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+        #region 907. 子数组的最小值之和
+        /// <summary>
+        /// 给定一个整数数组 arr，找到 min(b) 的总和，其中 b 的范围为 arr 的每个（连续）子数组。
+        /// 由于答案可能很大，因此 返回答案模 10^9 + 7 。
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        public static int SumSubarrayMins(int[] arr)
+        {
+            return (int)(SumSub(arr, 1) % ((int)Math.Pow(10, 9) + 7));
+        }
+        private static long SumSub(int[] arr, int len)
+        {
+            if (len > arr.Length) return 0;
+
+            long sum = 0;
+            var left = 0;
+
+            for (var right = left + len; right <= arr.Length; right = left + len)
+            {
+                if (len > 1)
+                {
+                    var min = int.MaxValue;
+                    for (int j = left; j < right; j++)
+                    {
+                        min = Math.Min(min, arr[j]);
+                    }
+                    sum += min;
+                }
+                else
+                {
+                    sum += arr[left];
+                }
+                left++;
+            }
+
+            sum += SumSub(arr, len + 1);
+
+            return sum;
+        }
+        #endregion
+
+
         #region 189. 轮转数组
         /// <summary>
         /// 给定一个整数数组 nums，将数组中的元素向右轮转 k 个位置，其中 k 是非负数。
@@ -236,7 +308,7 @@ namespace SoftLiu_DataStructCSharp.LeetCode
 
         public bool Insert(int val)
         {
-            if(dict.TryGetValue(val, out var index))
+            if (dict.TryGetValue(val, out var index))
             {
                 return false;
             }
