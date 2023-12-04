@@ -22,8 +22,9 @@ namespace SoftLiu_DataStructCSharp.LeetCode
 
         public static void LeetCodeRun()
         {
-            int[] nums = new int[] { 3, 2, 1, 0, 4 };
-            Console.WriteLine(CanJump(nums));
+            int[] nums = new int[] { 1, 2, 0, 1 };
+            var count = Jump(nums);
+            Console.WriteLine($"4 -> Value:{count}");
         }
 
         #region 45. 跳跃游戏 II
@@ -37,34 +38,43 @@ namespace SoftLiu_DataStructCSharp.LeetCode
         /// </summary>
         /// <param name="nums"></param>
         /// <returns></returns>
-        public static int JumpII(int[] nums)
+        public static int Jump(int[] nums)
         {
+            if (nums.Length <= 1) return 0;
             var sum = nums[0];
             if (sum >= nums.Length - 1) return 1;
+            var list = new List<int>();
 
-            var count = 0;
-
-            var index = 0;
             for (int i = nums.Length - 2; i >= 0; i--)
             {
                 var val = nums[i];
                 if (val >= nums.Length - i - 1)
                 {
-                    count = 1;
+                    list.Clear();
+                    list.Add(i);
+                    continue;
                 }
-
-
-                if (val > 0)
+                // 然后计算后面的到当前位置的步数
+                var jumpIndex = list.Count;
+                for (int j = 0; j < list.Count; j++)
                 {
-                    if (val > index)
+                    var index = list[j];
+                    if (index - i <= val)
                     {
-                        index = 0;
-                        continue;
+                        jumpIndex = j;
+                        break;
                     }
                 }
-                index++;
+                for (int j = list.Count - 1; j > jumpIndex; j--)
+                {
+                    list.RemoveAt(j);
+                }
+                if (list.Count > 0 && val >= list[list.Count - 1] - i)
+                {
+                    list.Add(i);
+                }
             }
-            return 0;
+            return list.Count;
         }
         #endregion
 
@@ -85,7 +95,7 @@ namespace SoftLiu_DataStructCSharp.LeetCode
             for (int i = nums.Length - 2; i >= 0; i--)
             {
                 var val = nums[i];
-                if(val > 0)
+                if (val > 0)
                 {
                     if (val > index)
                     {
