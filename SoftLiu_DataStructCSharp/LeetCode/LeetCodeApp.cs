@@ -22,10 +22,7 @@ namespace SoftLiu_DataStructCSharp.LeetCode
 
         public static void LeetCodeRun()
         {
-            //int[] nums = new int[] { 1, 7, 9, 4 };
-            var s = "MCMXCIV";
-            var ret = RomanToInt(s);
-            Console.WriteLine($"1994 -> Value:{ret}");
+            GenerateTrees(4);
         }
 
         #region 13. 罗马数字转整数
@@ -52,7 +49,7 @@ namespace SoftLiu_DataStructCSharp.LeetCode
             for (int i = 1; i < s.Length; i++)
             {
                 var num = dict[s[i]];
-                if(num > perValue)
+                if (num > perValue)
                 {
                     sum -= perValue;
                 }
@@ -62,7 +59,7 @@ namespace SoftLiu_DataStructCSharp.LeetCode
                 }
                 perValue = num;
             }
-            return sum+perValue;
+            return sum + perValue;
         }
 
         #endregion
@@ -146,6 +143,92 @@ namespace SoftLiu_DataStructCSharp.LeetCode
                 index++;
             }
             return nums[0] >= index;
+        }
+
+        #endregion
+
+        #region 95. 不同的二叉搜索树 II
+        public class TreeNode
+        {
+            public int val;
+            public TreeNode left;
+            public TreeNode right;
+            public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
+            {
+                this.val = val;
+                this.left = left;
+                this.right = right;
+            }
+        }
+
+        public static IList<TreeNode> GenerateTrees(int n)
+        {
+            var list = new List<TreeNode>();
+            if (n <= 1)
+            {
+                list.Add(new TreeNode(n));
+                return list;
+            }
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 0; j < n - 1; j++)
+                {
+                    var val = i;
+                    var root = new TreeNode(val);
+                    Console.Write($"{val},");
+                    list.Add(root);
+                    var curVal = val + j;
+                    var index = 0;
+                    do
+                    {
+                        curVal++;
+                        if (curVal > n) curVal = curVal - n;
+                        if (curVal != val)
+                        {
+                            Console.Write($"{curVal},");
+                            CreateTree(root, curVal);
+                        }
+                        index++;
+                    } while (index < n);
+                    Console.WriteLine("");
+                }
+            }
+            return list;
+        }
+
+        private static void CreateTree(TreeNode root, int val)
+        {
+            var node = new TreeNode(val);
+            var head = root;
+            while (true)
+            {
+                if (head.val > val)
+                {
+                    // 左边
+                    if (head.left == null)
+                    {
+                        head.left = node;
+                        break;
+                    }
+                    else
+                    {
+                        head = head.left;
+                    }
+                }
+                else
+                {
+                    // 右边
+                    if (head.right == null)
+                    {
+                        head.right = node;
+                        break;
+                    }
+                    else
+                    {
+                        head = head.right;
+                    }
+                }
+            }
         }
 
         #endregion
