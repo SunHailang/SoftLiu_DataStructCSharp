@@ -16,13 +16,12 @@ namespace SoftLiu_DataStructCSharp.LeetCode
             //Time20231202.Run();
             //Time20231203.Run();
             //Time20231205.Run();
-
             LeetCodeRun();
         }
 
         public static void LeetCodeRun()
         {
-            GenerateTrees(4);
+            NumTrees(4);
         }
 
         #region 13. 罗马数字转整数
@@ -163,74 +162,104 @@ namespace SoftLiu_DataStructCSharp.LeetCode
 
         public static IList<TreeNode> GenerateTrees(int n)
         {
-            var list = new List<TreeNode>();
-            if (n <= 1)
-            {
-                list.Add(new TreeNode(n));
-                return list;
-            }
-            for (int i = 1; i <= n; i++)
-            {
-                for (int j = 0; j < n - 1; j++)
-                {
-                    var val = i;
-                    var root = new TreeNode(val);
-                    Console.Write($"{val},");
-                    list.Add(root);
-                    var curVal = val + j;
-                    var index = 0;
-                    do
-                    {
-                        curVal++;
-                        if (curVal > n) curVal = curVal - n;
-                        if (curVal != val)
-                        {
-                            Console.Write($"{curVal},");
-                            CreateTree(root, curVal);
-                        }
-                        index++;
-                    } while (index < n);
-                    Console.WriteLine("");
-                }
-            }
-            return list;
+            if (n <= 0) return new List<TreeNode>();
+            return generateTreesII(1, n);
         }
 
-        private static void CreateTree(TreeNode root, int val)
+        public static List<TreeNode> generateTreesII(int start, int end)
         {
-            var node = new TreeNode(val);
-            var head = root;
-            while (true)
+            var allTrees = new List<TreeNode>();
+            if (start > end)
             {
-                if (head.val > val)
+                allTrees.Add(null);
+                return allTrees;
+            }
+            for (int i = start; i <= end; i++)
+            {
+                // 获得所有可行的左子树集合
+                var leftTrees = generateTreesII(start, i - 1);
+                // 获得所有可行的右子树集合
+                var rightTrees = generateTreesII(i + 1, end);
+                // 从左子树集合中选出一棵左子树，从右子树集合中选出一棵右子树，拼接到根节点上
+                for (int j = 0; j < leftTrees.Count; j++)
                 {
-                    // 左边
-                    if (head.left == null)
+                    for (int k = 0; k < rightTrees.Count; k++)
                     {
-                        head.left = node;
-                        break;
-                    }
-                    else
-                    {
-                        head = head.left;
-                    }
-                }
-                else
-                {
-                    // 右边
-                    if (head.right == null)
-                    {
-                        head.right = node;
-                        break;
-                    }
-                    else
-                    {
-                        head = head.right;
+                        var root = new TreeNode(i);
+                        root.left = leftTrees[j];
+                        root.right = rightTrees[k];
+                        allTrees.Add(root);
                     }
                 }
             }
+            return allTrees;
         }
 
+        #endregion
+
+        #region 96. 不同的二叉搜索树
+        /// <summary>
+        /// 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static int NumTrees(int n)
+        {
+            if (n <= 0) return 0;
+            return generateTrees(1, n);
+        }
+
+        public static int generateTrees(int start, int end)
+        {
+            int count = 1;
+            if (start > end)
+            {
+                return count;
+            }
+            for (int i = start; i <= end; i++)
+            {
+                // 获得所有可行的左子树集合
+                var leftCount = generateTrees(start, i - 1);
+                // 获得所有可行的右子树集合
+                var rightCount = generateTrees(i + 1, end);
+                // 从左子树集合中选出一棵左子树，从右子树集合中选出一棵右子树，拼接到根节点上
+                count += leftCount * rightCount;
+            }
+            return count;
+        }
+
+        #endregion
+
+        #region 222. 完全二叉树的节点个数
+        public static int CountNodes(TreeNode root)
+        {
+            var count = 0;
+            if (root == null) return count;
+            count++;
+            count += CountNodes(root.left);
+            count += CountNodes(root.right);
+
+            return count;
+        }
+
+
+
+        #endregion
+
+        #region 226. 翻转二叉树
+        public static TreeNode InvertTree(TreeNode root)
+        {
+            if (root == null) return null;
+
+            var temp = root.left;
+            root.left = root.right;
+            root.right = temp;
+
+            InvertTree(root.left);
+            InvertTree(root.right);
+
+            return root;
+        }
         #endregion
 
         #region 238. 除自身以外数组的乘积
@@ -271,14 +300,51 @@ namespace SoftLiu_DataStructCSharp.LeetCode
 
         #endregion
 
-        #region 274. H 指数
-        /// <summary>
-        /// 给你一个整数数组 citations ，其中 citations[i] 表示研究者的第 i 篇论文被引用的次数。计算并返回该研究者的 h 指数。
-        /// 根据维基百科上 h 指数的定义：h 代表“高引用次数” ，一名科研人员的 h 指数 是指他（她）至少发表了 h 篇论文，并且每篇论文 至少 被引用 h 次。如果 h 有多种可能的值，h 指数 是其中最大的那个。
-        /// </summary>
-        /// <param name="citations"></param>
-        /// <returns></returns>
-        public static int HIndex(int[] citations)
+        #region 257. 二叉树的所有路径
+        public static IList<string> BinaryTreePaths(TreeNode root)
+        {
+            var list = new List<string>();
+            var sb = new StringBuilder();
+            BinaryTreePaths(root, list, sb);
+            return list;
+        }
+
+        private static void BinaryTreePaths(TreeNode root, List<string> list, StringBuilder sb)
+        {
+            if (root == null) return;
+            var str = $"{root.val}";
+            if (root.left == null && root.right == null)
+            {
+                // 叶子节点
+                sb.Append(str);
+                list.Add(sb.ToString());
+                sb.Remove(sb.Length - str.Length, str.Length);
+                return;
+            }
+            sb.Append(str);
+            sb.Append('-');
+            sb.Append('>');
+            if (root.left != null)
+            {
+                BinaryTreePaths(root.left, list, sb);
+            }
+            if (root.right != null)
+            {
+                BinaryTreePaths(root.right, list, sb);
+            }
+            sb.Remove(sb.Length - 2 - str.Length, 2 + str.Length);
+        }
+
+            #endregion
+
+            #region 274. H 指数
+            /// <summary>
+            /// 给你一个整数数组 citations ，其中 citations[i] 表示研究者的第 i 篇论文被引用的次数。计算并返回该研究者的 h 指数。
+            /// 根据维基百科上 h 指数的定义：h 代表“高引用次数” ，一名科研人员的 h 指数 是指他（她）至少发表了 h 篇论文，并且每篇论文 至少 被引用 h 次。如果 h 有多种可能的值，h 指数 是其中最大的那个。
+            /// </summary>
+            /// <param name="citations"></param>
+            /// <returns></returns>
+            public static int HIndex(int[] citations)
         {
             if (citations == null || citations.Length <= 0) return 0;
             if (citations.Length == 1)
