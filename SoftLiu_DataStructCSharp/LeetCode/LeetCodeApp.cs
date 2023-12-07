@@ -16,12 +16,15 @@ namespace SoftLiu_DataStructCSharp.LeetCode
             //Time20231202.Run();
             //Time20231203.Run();
             //Time20231205.Run();
+            //Time20231206.Run();
             LeetCodeRun();
         }
 
         public static void LeetCodeRun()
         {
-            NumTrees(4);
+            var s = "badc";
+            var t = "baba";
+            Console.WriteLine(IsIsomorphic(s, t));
         }
 
         #region 13. 罗马数字转整数
@@ -230,6 +233,39 @@ namespace SoftLiu_DataStructCSharp.LeetCode
 
         #endregion
 
+        #region 205. 同构字符串
+        /// <summary>
+        /// 给定两个字符串 s 和 t ，判断它们是否是同构的。
+        /// 如果 s 中的字符可以按某种映射关系替换得到 t ，那么这两个字符串是同构的。
+        /// 每个出现的字符都应当映射到另一个字符，同时不改变字符的顺序。
+        /// 不同字符不能映射到同一个字符上，相同字符只能映射到同一个字符上，字符可以映射到自己本身。
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static bool IsIsomorphic(string s, string t)
+        {
+            if (s.Length != t.Length) return false;
+
+            var s2t = new Dictionary<char, char>();
+            var t2s = new Dictionary<char, char>();
+            int len = s.Length;
+            for (int i = 0; i < len; ++i)
+            {
+                var x = s[i];
+                var y = t[i];
+                if(s2t.TryGetValue(x, out var sVal) && sVal != y || t2s.TryGetValue(y, out var tVal) && tVal != x)
+                {
+                    return false;
+                }
+                s2t[x] = y;
+                t2s[y] = x;
+            }
+            return true;
+        }
+
+        #endregion
+
         #region 222. 完全二叉树的节点个数
         public static int CountNodes(TreeNode root)
         {
@@ -335,16 +371,16 @@ namespace SoftLiu_DataStructCSharp.LeetCode
             sb.Remove(sb.Length - 2 - str.Length, 2 + str.Length);
         }
 
-            #endregion
+        #endregion
 
-            #region 274. H 指数
-            /// <summary>
-            /// 给你一个整数数组 citations ，其中 citations[i] 表示研究者的第 i 篇论文被引用的次数。计算并返回该研究者的 h 指数。
-            /// 根据维基百科上 h 指数的定义：h 代表“高引用次数” ，一名科研人员的 h 指数 是指他（她）至少发表了 h 篇论文，并且每篇论文 至少 被引用 h 次。如果 h 有多种可能的值，h 指数 是其中最大的那个。
-            /// </summary>
-            /// <param name="citations"></param>
-            /// <returns></returns>
-            public static int HIndex(int[] citations)
+        #region 274. H 指数
+        /// <summary>
+        /// 给你一个整数数组 citations ，其中 citations[i] 表示研究者的第 i 篇论文被引用的次数。计算并返回该研究者的 h 指数。
+        /// 根据维基百科上 h 指数的定义：h 代表“高引用次数” ，一名科研人员的 h 指数 是指他（她）至少发表了 h 篇论文，并且每篇论文 至少 被引用 h 次。如果 h 有多种可能的值，h 指数 是其中最大的那个。
+        /// </summary>
+        /// <param name="citations"></param>
+        /// <returns></returns>
+        public static int HIndex(int[] citations)
         {
             if (citations == null || citations.Length <= 0) return 0;
             if (citations.Length == 1)
@@ -407,6 +443,47 @@ namespace SoftLiu_DataStructCSharp.LeetCode
             public int refCount;
         }
 
+        #endregion
+
+        #region 383. 赎金信
+        /// <summary>
+        /// 给你两个字符串：ransomNote 和 magazine ，判断 ransomNote 能不能由 magazine 里面的字符构成。
+        /// 如果可以，返回 true ；否则返回 false 。
+        /// magazine 中的每个字符只能在 ransomNote 中使用一次。
+        /// </summary>
+        /// <param name="ransomNote"></param>
+        /// <param name="magazine"></param>
+        /// <returns></returns>
+        public static bool CanConstruct(string ransomNote, string magazine)
+        {
+            var dict = new Dictionary<char, int>();
+            for (int i = 0; i < ransomNote.Length; i++)
+            {
+                if (dict.TryGetValue(ransomNote[i], out var count))
+                {
+                    dict[ransomNote[i]] = count + 1;
+                }
+                else
+                {
+                    dict[ransomNote[i]] = 1;
+                }
+            }
+
+            for (int i = 0; i < magazine.Length; i++)
+            {
+                if (dict.TryGetValue(magazine[i], out var count))
+                {
+                    if (count > 0)
+                    {
+                        count--;
+                        dict[magazine[i]] = count;
+                    }
+                    if (count <= 0) dict.Remove(magazine[i]);
+                }
+            }
+            return dict.Count <= 0;
+
+        }
         #endregion
     }
 }
